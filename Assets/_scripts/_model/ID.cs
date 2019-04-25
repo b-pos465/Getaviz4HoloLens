@@ -15,7 +15,9 @@
             };
         }
 
-        public override string ToString() => this.Value;
+        public override string ToString() {
+            return this.Value;
+        }
 
         public override bool Equals(object obj)
         {
