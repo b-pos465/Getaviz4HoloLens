@@ -1,35 +1,48 @@
-﻿using Model;
+﻿using Logging;
+using Model;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Import
 {
     public class ImportController : MonoBehaviour
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private static readonly string MODEL_PATH = @"Assets/_generator-data/model.html";
+        private static readonly string METADATA_PATH = @"Assets/_generator-data/metaData.json";
+
+        [Inject]
+        public MeshRootIndicator meshRootIndicator;
+
         public GameObject entityPrefab;
-        public Transform meshRoot;
 
         private Dictionary<ID, Entity> entityDict;
 
-        void Start()
+        public GameObject Import()
         {
             this.entityDict = new Dictionary<ID, Entity>();
 
-            HtmlImporter htmlImporter = new HtmlImporter(@"Assets/_generator-data/model.html");
+            log.Debug("Importing model from {} ...", MODEL_PATH);
+            HtmlImporter htmlImporter = new HtmlImporter(MODEL_PATH);
             Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict = htmlImporter.Import();
 
-            this.BuildGameObjects(transformAndColorInformationDict);
+            GameObject modelRoot = this.BuildGameObjects(transformAndColorInformationDict);
 
-            JsonImporter jsonImporter = new JsonImporter(@"Assets/_generator-data/metaData.json");
+            log.Debug("Importing metadata from {} ...", METADATA_PATH);
+            JsonImporter jsonImporter = new JsonImporter(METADATA_PATH);
             Dictionary<ID, MetaData> metaDataDict = jsonImporter.Import();
 
             this.FillMetaDataInformation(metaDataDict);
+
+            return modelRoot;
         }
 
-        private void BuildGameObjects(Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict)
+        private GameObject BuildGameObjects(Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict)
         {
             GameObject model = new GameObject("Model");
-            model.transform.parent = this.meshRoot;
+            model.transform.parent = this.meshRootIndicator.gameObject.transform;
 
             foreach (KeyValuePair<ID, TransformAndColorInformation> entry in transformAndColorInformationDict)
             {
@@ -43,6 +56,8 @@ namespace Import
                 entity.GetComponent<MeshRenderer>().material.SetColor("_Color", transformAndColorInformation.Color);
                 this.entityDict.Add(ID.From(entry.Key.ToString()), entity.GetComponent<Entity>());
             }
+
+            return model;
         }
 
         private void FillMetaDataInformation(Dictionary<ID, MetaData> metaDataDict)
