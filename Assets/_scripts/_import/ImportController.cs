@@ -14,7 +14,7 @@ namespace Import
         private static readonly string METADATA_PATH = @"Assets/_generator-data/metaData.json";
 
         [Inject]
-        public MeshRootIndicator meshRootIndicator;
+        private MeshRootIndicator meshRootIndicator;
 
         public GameObject entityPrefab;
 

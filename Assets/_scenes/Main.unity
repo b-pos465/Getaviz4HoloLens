@@ -153,8 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b0c1f399b0cc3f428bae8f3baa3f993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshRootIndicator: {fileID: 0}
-  entityPrefab: {fileID: 800810890719137159, guid: 9b5b37f436815044d99836b5a9092747,
+  entityPrefab: {fileID: 1427651235729496, guid: 9b5b37f436815044d99836b5a9092747,
     type: 2}
 --- !u!1001 &159176775
 Prefab:
@@ -725,6 +724,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1690056184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1690056185}
+  - component: {fileID: 1690056186}
+  m_Layer: 0
+  m_Name: Ray Caster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1690056185
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1690056184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1806362151}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1690056186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1690056184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16582d9ffacc0834c89112997ff59cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  length: 20
 --- !u!1 &1711333191
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +859,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1832053603}
+  - {fileID: 1690056185}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -973,6 +1014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   importController: {fileID: 32161901}
+  rayCaster: {fileID: 0}
   markerPrefab: {fileID: 1521413265848844, guid: 87189b2956aaf9245b3a989ebc5ac6fc,
     type: 2}
   tolerance: 0.1
@@ -1018,7 +1060,7 @@ Prefab:
     - target: {fileID: 114000011154029958, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
         type: 2}
       propertyPath: drawVisualMeshes
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114000012149591842, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
         type: 2}

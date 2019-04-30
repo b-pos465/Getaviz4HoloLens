@@ -1,17 +1,21 @@
-﻿using Import;
+﻿using Gaze;
+using Import;
 using Logging;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 using Zenject;
 
-namespace spatial_mapping
+namespace SpatialMapping
 {
     public class MetaphorPlacer : MonoBehaviour
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         [Inject]
-        public ImportController importController;
+        private ImportController importController;
+
+        [Inject]
+        private RayCaster rayCaster;
 
         public GameObject markerPrefab;
 
@@ -42,6 +46,8 @@ namespace spatial_mapping
             ShootRayAndPlaceModelIfPossible(headRay);
         }
 
+        // We use the 'Ray' from the TapEvent to make sure that it is the right one.
+        // There could be a delay.
         void ShootRayAndPlaceModelIfPossible(Ray headRay)
         {
             RaycastHit hitInfo;
@@ -75,26 +81,17 @@ namespace spatial_mapping
             newPosition.x -= bounds.size.x / 2;
             newPosition.z -= bounds.size.z / 2;
             model.transform.position = newPosition;
-
-
         }
 
         void Update()
         {
-            RaycastHit hitInfo;
-            bool raycastHit = Physics.Raycast(
-                                        Camera.main.transform.position,
-                                        Camera.main.transform.forward,
-                                        out hitInfo,
-                                        20.0f,
-                                        Physics.DefaultRaycastLayers);
-            if (raycastHit)
+            if (this.rayCaster.Hits)
             {
-                if (HitPointNormalPointsUpward(hitInfo))
+                if (HitPointNormalPointsUpward(this.rayCaster.HitPointNormal))
                 {
                     plane.SetActive(true);
-                    plane.transform.position = hitInfo.point;
-                    plane.transform.up = hitInfo.normal;
+                    plane.transform.position = this.rayCaster.HitPoint;
+                    plane.transform.up = this.rayCaster.HitPointNormal;
                 }
                 else
                 {
@@ -103,11 +100,11 @@ namespace spatial_mapping
             }
         }
 
-        private bool HitPointNormalPointsUpward(RaycastHit hitInfo)
+        private bool HitPointNormalPointsUpward(Vector3 hitPointNormal)
         {
-            bool xIsSmallEnough = Mathf.Abs(hitInfo.normal.x) < this.tolerance;
-            bool zIsSmallEnough = Mathf.Abs(hitInfo.normal.z) < this.tolerance;
-            bool yIsPositive = hitInfo.normal.y > 0f;
+            bool xIsSmallEnough = Mathf.Abs(hitPointNormal.x) < this.tolerance;
+            bool zIsSmallEnough = Mathf.Abs(hitPointNormal.z) < this.tolerance;
+            bool yIsPositive = hitPointNormal.y > 0f;
 
             return xIsSmallEnough && zIsSmallEnough && yIsPositive;
         }
