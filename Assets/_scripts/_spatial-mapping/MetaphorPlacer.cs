@@ -75,7 +75,7 @@ namespace SpatialMapping
                 bounds.Encapsulate(collider.bounds);
             }
 
-            log.Debug("Calculated overall bounds for model: x={}, y={}, z={}", bounds.size.x, bounds.size.y, bounds.size.z);
+            log.Debug("Calculated overall bounds for model: x={}, y={}, z={}.", bounds.size.x, bounds.size.y, bounds.size.z);
             Vector3 newPosition = model.transform.position;
 
             newPosition.x -= bounds.size.x / 2;
