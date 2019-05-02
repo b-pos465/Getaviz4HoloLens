@@ -16,6 +16,9 @@ namespace Import
         [Inject]
         private MeshRootIndicator meshRootIndicator;
 
+        [Inject]
+        DiContainer diContainter;
+
         public GameObject entityPrefab;
 
         private Dictionary<ID, Entity> entityDict;
@@ -48,7 +51,7 @@ namespace Import
             {
                 TransformAndColorInformation transformAndColorInformation = entry.Value;
 
-                GameObject entity = Instantiate(this.entityPrefab);
+                GameObject entity = this.diContainter.InstantiatePrefab(this.entityPrefab);
                 entity.transform.parent = model.transform;
                 entity.transform.position = transformAndColorInformation.Position;
                 entity.transform.localScale = transformAndColorInformation.Scale;

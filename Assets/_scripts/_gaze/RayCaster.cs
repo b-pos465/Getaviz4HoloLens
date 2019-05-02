@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using HoloToolkit.Unity.InputModule;
+using UnityEngine;
+using Zenject;
 
 namespace Gaze
 {
     public class RayCaster : MonoBehaviour
     {
+        /*
+         * The 'HoloToolkit' provides a gaze stabilizer which helps the user to focus on a certain point.
+         */
+        [Inject]
+        GazeStabilizer gazeStabilizer;
+
         public float length = 20.0f;
 
         public bool Hits
@@ -26,8 +34,7 @@ namespace Gaze
         {
             RaycastHit hitInfo;
             bool raycastHit = Physics.Raycast(
-                                        Camera.main.transform.position,
-                                        Camera.main.transform.forward,
+                                        this.gazeStabilizer.StableRay,
                                         out hitInfo,
                                         this.length,
                                         Physics.DefaultRaycastLayers);

@@ -557,6 +557,16 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 20770519707920992, guid: d29bc40b7f3df26479d6a0aac211c355,
+        type: 2}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114504390558679740, guid: d29bc40b7f3df26479d6a0aac211c355,
+        type: 2}
+      propertyPath: NearClipPlane_TransparentDisplay
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d29bc40b7f3df26479d6a0aac211c355, type: 2}
   m_IsPrefabParent: 0
@@ -1013,8 +1023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e09d64fb13aaf449917d450b72ff3c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  importController: {fileID: 32161901}
-  rayCaster: {fileID: 0}
   markerPrefab: {fileID: 1521413265848844, guid: 87189b2956aaf9245b3a989ebc5ac6fc,
     type: 2}
   tolerance: 0.1

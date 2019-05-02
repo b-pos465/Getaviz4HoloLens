@@ -1,4 +1,5 @@
 ﻿using Gaze;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +9,12 @@ public class ColorChangeOnHover : MonoBehaviour
     private RayCaster rayCaster;
 
     public Color hoverColor;
+
+    [Header("Durations")]
+    public float fadeSelectDurationInSeconds = 0.3f;
+    public float fadeDeselectDurationInSeconds = 0.2f;
+
+    public bool enableFade = false;
 
     private Color defaultColor;
     private MeshRenderer meshRenderer;
@@ -22,11 +29,53 @@ public class ColorChangeOnHover : MonoBehaviour
     {
         if (this.rayCaster.Hits && this.rayCaster.Target == this.gameObject)
         {
-            this.meshRenderer.material.SetColor("_Color", this.hoverColor);
+            if (this.enableFade)
+            {
+                StartCoroutine(Fade(Direction.SELECT));
+            }
+            else
+            {
+                this.meshRenderer.material.SetColor("_Color", this.hoverColor);
+            }
         }
-        else
+        else if (this.meshRenderer.material.color == this.hoverColor)
         {
-            this.meshRenderer.material.SetColor("_Color", this.defaultColor);
+            if (this.enableFade)
+            {
+                StartCoroutine(Fade(Direction.DESELECT));
+            }
+            else
+            {
+                this.meshRenderer.material.SetColor("_Color", this.defaultColor);
+            }
         }
+    }
+
+    private IEnumerator Fade(Direction direction)
+    {
+        float fadeDurationInSeconds = direction == Direction.SELECT ? this.fadeSelectDurationInSeconds : this.fadeDeselectDurationInSeconds;
+        Color startColor = direction == Direction.SELECT ? this.defaultColor : this.hoverColor;
+        Color targetColor = direction == Direction.SELECT ? this.hoverColor : this.defaultColor;
+
+        float progressAsPercentage = 0f;
+
+        while (progressAsPercentage < 1f)
+        {
+            float fromZeroToOne = (Mathf.Cos(Mathf.PI * progressAsPercentage + Mathf.PI) + 1f) * 0.5f;
+
+            Color currentColor = Color.Lerp(startColor, targetColor, fromZeroToOne);
+            this.meshRenderer.material.SetColor("_Color", currentColor);
+
+            progressAsPercentage += Time.deltaTime * (1f / fadeDurationInSeconds);
+
+            yield return null;
+        }
+
+        this.meshRenderer.material.SetColor("_Color", targetColor);
+    }
+
+    enum Direction
+    {
+        SELECT, DESELECT
     }
 }

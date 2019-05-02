@@ -1,4 +1,5 @@
 using Gaze;
+using HoloToolkit.Unity.InputModule;
 using Import;
 using Logging;
 using Zenject;
@@ -12,6 +13,7 @@ public class MainInstaller : MonoInstaller
         log.Debug("Installing Bindings ...");
 
         this.Container.Bind<ImportController>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<GazeStabilizer>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<RayCaster>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<MeshRootIndicator>().FromComponentInHierarchy().AsSingle();
