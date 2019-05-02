@@ -14,7 +14,7 @@ public class SourceCodeOnClickController : MonoBehaviour
     RayCaster rayCaster;
 
     [Inject]
-    MeshRootIndicator meshRootIndicator;
+    ModelIndicator modelIndicator;
 
     public float distanceToCamera = 2.5f;
 
@@ -42,7 +42,7 @@ public class SourceCodeOnClickController : MonoBehaviour
         if (this.rayCaster.Hits && this.rayCaster.Target.GetComponent<Entity>() != null)
         {
             this.canvas.enabled = true;
-            this.meshRootIndicator.gameObject.SetActive(false);
+            this.modelIndicator.gameObject.SetActive(false);
 
             Vector3 forwardWithoutY = Camera.main.transform.forward;
             forwardWithoutY.y = 0;
@@ -59,7 +59,7 @@ public class SourceCodeOnClickController : MonoBehaviour
     public void Close()
     {
         this.canvas.enabled = false;
-        this.meshRootIndicator.gameObject.SetActive(true);
+        this.modelIndicator.gameObject.SetActive(true);
     }
 
     private void OnDestroy()

@@ -14,7 +14,7 @@ namespace Import
         private static readonly string METADATA_PATH = @"Assets/_generator-data/metaData.json";
 
         [Inject]
-        private MeshRootIndicator meshRootIndicator;
+        private ModelIndicator modelIndicator;
 
         [Inject]
         DiContainer diContainter;
@@ -44,8 +44,8 @@ namespace Import
 
         private GameObject BuildGameObjects(Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict)
         {
-            GameObject model = new GameObject("Model");
-            model.transform.parent = this.meshRootIndicator.gameObject.transform;
+            GameObject model = this.modelIndicator.gameObject;
+            model.transform.parent = this.modelIndicator.gameObject.transform;
 
             foreach (KeyValuePair<ID, TransformAndColorInformation> entry in transformAndColorInformationDict)
             {

@@ -15,7 +15,8 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<ImportController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<GazeStabilizer>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<RayCaster>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<DragRecognizer>().FromComponentInHierarchy().AsSingle();
 
-        this.Container.Bind<MeshRootIndicator>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<ModelIndicator>().FromComponentInHierarchy().AsSingle();
     }
 }
