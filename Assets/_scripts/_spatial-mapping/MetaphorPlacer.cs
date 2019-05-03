@@ -29,73 +29,54 @@ namespace SpatialMapping
         {
             log.Debug("Starting GestureRecognizer ...");
             this.gestureRecognizer = new GestureRecognizer();
-            this.gestureRecognizer.TappedEvent += OnAirTap;
+            this.gestureRecognizer.Tapped += this.OnAirTap;
             this.gestureRecognizer.StartCapturingGestures();
 
             this.plane = Instantiate(this.markerPrefab);
-            plane.SetActive(false);
+            this.plane.SetActive(false);
         }
 
-        private void OnAirTap(InteractionSourceKind source, int tapCount, Ray headRay)
+        private void OnAirTap(TappedEventArgs tappedEventArgs)
         {
             if (this.plane == null)
             {
                 return;
             }
 
-            ShootRayAndPlaceModelIfPossible(headRay);
+            this.ShootRayAndPlaceModelIfPossible();
         }
 
-        // We use the 'Ray' from the TapEvent to make sure that it is the right one.
-        // There could be a delay.
-        void ShootRayAndPlaceModelIfPossible(Ray headRay)
+        void ShootRayAndPlaceModelIfPossible()
         {
-            RaycastHit hitInfo;
-            bool raycastHit = Physics.Raycast(headRay, out hitInfo, 20.0f, Physics.DefaultRaycastLayers);
-
-            if (raycastHit)
+            if (this.rayCaster.Hits)
             {
                 GameObject model = this.importController.Import();
-                CenterAndScaleModel(model, hitInfo.point);
+                this.ScaleModel(model, this.rayCaster.HitPoint);
 
                 Destroy(this.plane);
                 Destroy(this);
             }
         }
 
-        void CenterAndScaleModel(GameObject model, Vector3 center)
+        void ScaleModel(GameObject model, Vector3 center)
         {
             model.transform.localScale = 0.0005f * Vector3.one;
             model.transform.position = center;
-
-            Bounds bounds = new Bounds(model.transform.position, Vector3.zero);
-            BoxCollider[] colliders = model.GetComponentsInChildren<BoxCollider>();
-            foreach (BoxCollider collider in colliders)
-            {
-                bounds.Encapsulate(collider.bounds);
-            }
-
-            log.Debug("Calculated overall bounds for model: x={}, y={}, z={}.", bounds.size.x, bounds.size.y, bounds.size.z);
-            Vector3 newPosition = model.transform.position;
-
-            newPosition.x -= bounds.size.x / 2;
-            newPosition.z -= bounds.size.z / 2;
-            model.transform.position = newPosition;
         }
 
         void Update()
         {
             if (this.rayCaster.Hits)
             {
-                if (HitPointNormalPointsUpward(this.rayCaster.HitPointNormal))
+                if (this.HitPointNormalPointsUpward(this.rayCaster.HitPointNormal))
                 {
-                    plane.SetActive(true);
-                    plane.transform.position = this.rayCaster.HitPoint;
-                    plane.transform.up = this.rayCaster.HitPointNormal;
+                    this.plane.SetActive(true);
+                    this.plane.transform.position = this.rayCaster.HitPoint;
+                    this.plane.transform.up = this.rayCaster.HitPointNormal;
                 }
                 else
                 {
-                    plane.SetActive(false);
+                    this.plane.SetActive(false);
                 }
             }
         }

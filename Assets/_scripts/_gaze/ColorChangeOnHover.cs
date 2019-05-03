@@ -21,7 +21,7 @@ public class ColorChangeOnHover : MonoBehaviour
 
     private void Start()
     {
-        this.meshRenderer = GetComponent<MeshRenderer>();
+        this.meshRenderer = this.GetComponent<MeshRenderer>();
         this.defaultColor = this.meshRenderer.material.color;
     }
 
@@ -31,7 +31,7 @@ public class ColorChangeOnHover : MonoBehaviour
         {
             if (this.enableFade)
             {
-                StartCoroutine(Fade(Direction.SELECT));
+                this.StartCoroutine(this.Fade(Direction.SELECT));
             }
             else
             {
@@ -42,7 +42,7 @@ public class ColorChangeOnHover : MonoBehaviour
         {
             if (this.enableFade)
             {
-                StartCoroutine(Fade(Direction.DESELECT));
+                this.StartCoroutine(this.Fade(Direction.DESELECT));
             }
             else
             {

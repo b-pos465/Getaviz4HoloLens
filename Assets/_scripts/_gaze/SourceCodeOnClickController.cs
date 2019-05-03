@@ -23,21 +23,21 @@ public class SourceCodeOnClickController : MonoBehaviour
 
     void Start()
     {
-        this.canvas = GetComponent<Canvas>();
+        this.canvas = this.GetComponent<Canvas>();
         this.canvas.enabled = false;
 
         log.Debug("Starting GestureRecognizer ...");
         this.gestureRecognizer = new GestureRecognizer();
-        this.gestureRecognizer.TappedEvent += OnAirTap;
+        this.gestureRecognizer.Tapped += this.OnAirTap;
         this.gestureRecognizer.StartCapturingGestures();
     }
 
     private void Update()
     {
-        AdjustRotationToCameraPosition();
+        this.AdjustRotationToCameraPosition();
     }
 
-    private void OnAirTap(InteractionSourceKind source, int tapCount, Ray headRay)
+    private void OnAirTap(TappedEventArgs tappedEventArgs)
     {
         if (this.rayCaster.Hits && this.rayCaster.Target.GetComponent<Entity>() != null)
         {
@@ -46,14 +46,14 @@ public class SourceCodeOnClickController : MonoBehaviour
 
             Vector3 forwardWithoutY = Camera.main.transform.forward;
             forwardWithoutY.y = 0;
-            transform.position = Camera.main.transform.position + this.distanceToCamera * forwardWithoutY;
+            this.transform.position = Camera.main.transform.position + this.distanceToCamera * forwardWithoutY;
         }
     }
 
     private void AdjustRotationToCameraPosition()
     {
-        transform.LookAt(Camera.main.transform);
-        transform.Rotate(new Vector3(0, 180, 0));
+        this.transform.LookAt(Camera.main.transform);
+        this.transform.Rotate(new Vector3(0, 180, 0));
     }
 
     public void Close()

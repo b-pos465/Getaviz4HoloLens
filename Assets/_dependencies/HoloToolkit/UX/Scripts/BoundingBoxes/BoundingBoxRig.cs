@@ -12,6 +12,9 @@ namespace HoloToolkit.Unity.UX
     /// </summary>
     public class BoundingBoxRig : MonoBehaviour
     {
+        [Header("Getaviz Entension")]
+        public bool showRotationHandlesOnlyForYAxis = true;
+
         [Header("Flattening")]
         [SerializeField]
         [Tooltip("Choose this option if Rig is to be applied to a 2D object.")]
@@ -344,8 +347,10 @@ namespace HoloToolkit.Unity.UX
 
             if (rotateHandles == null)
             {
-                rotateHandles = new GameObject[12];
-                rigRotateGizmoHandles = new BoundingBoxGizmoHandle[12];
+                uint handleCount = this.showRotationHandlesOnlyForYAxis ? 4u : 12u;
+
+                rotateHandles = new GameObject[handleCount];
+                rigRotateGizmoHandles = new BoundingBoxGizmoHandle[handleCount];
                 for (int i = 0; i < rotateHandles.Length; ++i)
                 {
                     rotateHandles[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -359,7 +364,7 @@ namespace HoloToolkit.Unity.UX
                     rigRotateGizmoHandles[i].RotationCoordinateSystem = rotationType;
                     rigRotateGizmoHandles[i].TransformToAffect = objectToBound.transform;
                     rigRotateGizmoHandles[i].AffineType = BoundingBoxGizmoHandleTransformType.Rotation;
-                   
+
                 }
 
                 //set axis to affect
@@ -368,15 +373,18 @@ namespace HoloToolkit.Unity.UX
                 rigRotateGizmoHandles[2].Axis = BoundingBoxGizmoHandleAxisToAffect.Y;
                 rigRotateGizmoHandles[3].Axis = BoundingBoxGizmoHandleAxisToAffect.Y;
 
-                rigRotateGizmoHandles[4].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
-                rigRotateGizmoHandles[5].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
-                rigRotateGizmoHandles[6].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
-                rigRotateGizmoHandles[7].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
+                if (!this.showRotationHandlesOnlyForYAxis)
+                {
+                    rigRotateGizmoHandles[4].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
+                    rigRotateGizmoHandles[5].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
+                    rigRotateGizmoHandles[6].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
+                    rigRotateGizmoHandles[7].Axis = BoundingBoxGizmoHandleAxisToAffect.Z;
 
-                rigRotateGizmoHandles[8].Axis  = BoundingBoxGizmoHandleAxisToAffect.X;
-                rigRotateGizmoHandles[9].Axis  = BoundingBoxGizmoHandleAxisToAffect.X;
-                rigRotateGizmoHandles[10].Axis = BoundingBoxGizmoHandleAxisToAffect.X;
-                rigRotateGizmoHandles[11].Axis = BoundingBoxGizmoHandleAxisToAffect.X;
+                    rigRotateGizmoHandles[8].Axis = BoundingBoxGizmoHandleAxisToAffect.X;
+                    rigRotateGizmoHandles[9].Axis = BoundingBoxGizmoHandleAxisToAffect.X;
+                    rigRotateGizmoHandles[10].Axis = BoundingBoxGizmoHandleAxisToAffect.X;
+                    rigRotateGizmoHandles[11].Axis = BoundingBoxGizmoHandleAxisToAffect.X;
+                }
 
                 //set lefthandedness
                 rigRotateGizmoHandles[0].IsLeftHandedRotation = false;
@@ -384,29 +392,36 @@ namespace HoloToolkit.Unity.UX
                 rigRotateGizmoHandles[2].IsLeftHandedRotation = false;
                 rigRotateGizmoHandles[3].IsLeftHandedRotation = false;
 
-                rigRotateGizmoHandles[4].IsLeftHandedRotation = false;
-                rigRotateGizmoHandles[5].IsLeftHandedRotation = false;
-                rigRotateGizmoHandles[6].IsLeftHandedRotation = true;
-                rigRotateGizmoHandles[7].IsLeftHandedRotation = true;
+                if (!this.showRotationHandlesOnlyForYAxis)
+                {
+                    rigRotateGizmoHandles[4].IsLeftHandedRotation = false;
+                    rigRotateGizmoHandles[5].IsLeftHandedRotation = false;
+                    rigRotateGizmoHandles[6].IsLeftHandedRotation = true;
+                    rigRotateGizmoHandles[7].IsLeftHandedRotation = true;
 
-                rigRotateGizmoHandles[8].IsLeftHandedRotation = false;
-                rigRotateGizmoHandles[9].IsLeftHandedRotation = true;
-                rigRotateGizmoHandles[10].IsLeftHandedRotation = false;
-                rigRotateGizmoHandles[11].IsLeftHandedRotation = true;
+                    rigRotateGizmoHandles[8].IsLeftHandedRotation = false;
+                    rigRotateGizmoHandles[9].IsLeftHandedRotation = true;
+                    rigRotateGizmoHandles[10].IsLeftHandedRotation = false;
+                    rigRotateGizmoHandles[11].IsLeftHandedRotation = true;
+                }
             }
 
             rotateHandles[0].transform.localPosition = (handleCentroids[2] + handleCentroids[0]) * 0.5f;
             rotateHandles[1].transform.localPosition = (handleCentroids[3] + handleCentroids[1]) * 0.5f;
             rotateHandles[2].transform.localPosition = (handleCentroids[6] + handleCentroids[4]) * 0.5f;
             rotateHandles[3].transform.localPosition = (handleCentroids[7] + handleCentroids[5]) * 0.5f;
-            rotateHandles[4].transform.localPosition = (handleCentroids[0] + handleCentroids[1]) * 0.5f;
-            rotateHandles[5].transform.localPosition = (handleCentroids[2] + handleCentroids[3]) * 0.5f;
-            rotateHandles[6].transform.localPosition = (handleCentroids[4] + handleCentroids[5]) * 0.5f;
-            rotateHandles[7].transform.localPosition = (handleCentroids[6] + handleCentroids[7]) * 0.5f;
-            rotateHandles[8].transform.localPosition = (handleCentroids[0] + handleCentroids[4]) * 0.5f;
-            rotateHandles[9].transform.localPosition = (handleCentroids[1] + handleCentroids[5]) * 0.5f;
-            rotateHandles[10].transform.localPosition = (handleCentroids[2] + handleCentroids[6]) * 0.5f;
-            rotateHandles[11].transform.localPosition = (handleCentroids[3] + handleCentroids[7]) * 0.5f;
+
+            if (!this.showRotationHandlesOnlyForYAxis)
+            {
+                rotateHandles[4].transform.localPosition = (handleCentroids[0] + handleCentroids[1]) * 0.5f;
+                rotateHandles[5].transform.localPosition = (handleCentroids[2] + handleCentroids[3]) * 0.5f;
+                rotateHandles[6].transform.localPosition = (handleCentroids[4] + handleCentroids[5]) * 0.5f;
+                rotateHandles[7].transform.localPosition = (handleCentroids[6] + handleCentroids[7]) * 0.5f;
+                rotateHandles[8].transform.localPosition = (handleCentroids[0] + handleCentroids[4]) * 0.5f;
+                rotateHandles[9].transform.localPosition = (handleCentroids[1] + handleCentroids[5]) * 0.5f;
+                rotateHandles[10].transform.localPosition = (handleCentroids[2] + handleCentroids[6]) * 0.5f;
+                rotateHandles[11].transform.localPosition = (handleCentroids[3] + handleCentroids[7]) * 0.5f;
+            }
         }
 
         private void ParentHandles()
