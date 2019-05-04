@@ -8,14 +8,19 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 namespace HoloToolkit.Unity.UX
 {
     /// <summary>
     /// Logic for the App Bar. Generates buttons, manages states.
     /// </summary>
+    [RequireComponent(typeof(FilterButtonController))]
     public class AppBar : InteractionReceiver
     {
+        [Inject]
+        private DiContainer diContainer;
+
         private float buttonWidth = 1.50f;
 
         /// <summary>
@@ -69,7 +74,7 @@ namespace HoloToolkit.Unity.UX
 
             public bool IsEmpty
             {
-                get { return string.IsNullOrEmpty(Name); }
+                get { return string.IsNullOrEmpty(this.Name); }
             }
 
             public int DefaultPosition;
@@ -174,30 +179,33 @@ namespace HoloToolkit.Unity.UX
 
         public void Reset()
         {
-            State = AppBarStateEnum.Default;
-            FollowBoundingBox(false);
-            lastTimeTapped = Time.time + coolDownTime;
+            this.State = AppBarStateEnum.Default;
+            this.FollowBoundingBox(false);
+            this.lastTimeTapped = Time.time + this.coolDownTime;
         }
 
         public void Start()
         {
-            State = AppBarStateEnum.Default;
+            this.State = AppBarStateEnum.Default;
 
-            if (interactables.Count == 0)
+            this.buttons = new ButtonTemplate[1];
+            this.buttons[0] = this.GetComponent<FilterButtonController>().ProvideTemplate();
+
+            if (this.interactables.Count == 0)
             {
-                RefreshTemplates();
-                for (int i = 0; i < DefaultButtons.Length; i++)
+                this.RefreshTemplates();
+                for (int i = 0; i < this.DefaultButtons.Length; i++)
                 {
-                    CreateButton(DefaultButtons[i], null);
+                    this.CreateButton(this.DefaultButtons[i], null);
                 }
 
-                for (int i = 0; i < buttons.Length; i++)
+                for (int i = 0; i < this.buttons.Length; i++)
                 {
-                    CreateButton(buttons[i], CustomButtonIconProfile);
+                    this.CreateButton(this.buttons[i], this.CustomButtonIconProfile);
                 }
             }
 
-            helper = new BoundingBoxHelper();
+            this.helper = new BoundingBoxHelper();
         }
 
         protected override void InputClicked(GameObject obj, InputClickedEventData eventData)
@@ -245,6 +253,10 @@ namespace HoloToolkit.Unity.UX
                     boundingBox.Target.GetComponent<BoundingBoxRig>().Deactivate();
                     break;
 
+                case "Filter":
+                    this.GetComponent<FilterButtonController>().OnTap();
+                    break;
+
                 default:
                     break;
             }
@@ -288,7 +300,7 @@ namespace HoloToolkit.Unity.UX
                     throw new ArgumentOutOfRangeException();
             }
 
-            GameObject newButton = Instantiate(SquareButtonPrefab, buttonParent);
+            GameObject newButton = this.diContainer.InstantiatePrefab(this.SquareButtonPrefab, this.buttonParent);
             newButton.name = template.Name;
             newButton.transform.localPosition = Vector3.zero;
             newButton.transform.localRotation = Quaternion.identity;
@@ -368,15 +380,15 @@ namespace HoloToolkit.Unity.UX
         private void RefreshTemplates()
         {
             int numCustomButtons = 0;
-            for (int i = 0; i < buttons.Length; i++)
+            for (int i = 0; i < this.buttons.Length; i++)
             {
-                if (!buttons[i].IsEmpty)
+                if (!this.buttons[i].IsEmpty)
                 {
                     numCustomButtons++;
                 }
             }
 
-            var defaultButtonsList = new List<ButtonTemplate>();
+            List<ButtonTemplate> defaultButtonsList = new List<ButtonTemplate>();
 
             // Create our default button templates based on user preferences
             if (UseRemove)
@@ -395,13 +407,14 @@ namespace HoloToolkit.Unity.UX
                 defaultButtonsList.Add(GetDefaultButtonTemplateFromType(ButtonTypeEnum.Hide, numCustomButtons, UseHide, UseAdjust));
                 defaultButtonsList.Add(GetDefaultButtonTemplateFromType(ButtonTypeEnum.Show, numCustomButtons, UseHide, UseAdjust));
             }
-            DefaultButtons = defaultButtonsList.ToArray();
+
+            this.DefaultButtons = defaultButtonsList.ToArray();
         }
 
 #if UNITY_EDITOR
         public void EditorRefreshTemplates()
         {
-            RefreshTemplates();
+            this.RefreshTemplates();
         }
 #endif
 

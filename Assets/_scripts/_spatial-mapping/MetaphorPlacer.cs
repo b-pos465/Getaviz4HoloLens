@@ -1,6 +1,5 @@
 ﻿using Gaze;
 using Import;
-using Logging;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 using Zenject;
@@ -9,34 +8,29 @@ namespace SpatialMapping
 {
     public class MetaphorPlacer : MonoBehaviour
     {
-        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         [Inject]
         private ImportController importController;
 
         [Inject]
         private RayCaster rayCaster;
 
-        public GameObject markerPrefab;
+        [Inject]
+        private TapService tapService;
 
+        public GameObject markerPrefab;
         public float tolerance = 0.1f;
 
         private GameObject plane;
-        private GestureRecognizer gestureRecognizer;
 
 
         private void Start()
         {
-            log.Debug("Starting GestureRecognizer ...");
-            this.gestureRecognizer = new GestureRecognizer();
-            this.gestureRecognizer.Tapped += this.OnAirTap;
-            this.gestureRecognizer.StartCapturingGestures();
-
             this.plane = Instantiate(this.markerPrefab);
             this.plane.SetActive(false);
+            this.tapService.Register(this.OnTap);
         }
 
-        private void OnAirTap(TappedEventArgs tappedEventArgs)
+        private void OnTap(TappedEventArgs tappedEventArgs)
         {
             if (this.plane == null)
             {
@@ -88,12 +82,6 @@ namespace SpatialMapping
             bool yIsPositive = hitPointNormal.y > 0f;
 
             return xIsSmallEnough && zIsSmallEnough && yIsPositive;
-        }
-
-        private void OnDestroy()
-        {
-            log.Debug("Stopping GestureRecognizer ...");
-            this.gestureRecognizer.StopCapturingGestures();
         }
     }
 }

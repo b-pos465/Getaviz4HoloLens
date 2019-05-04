@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: DefaultButtonTextProfile
   m_EditorClassIdentifier: 
   Alignment: 1
-  Anchor: 7
+  Anchor: 4
   Style: 0
   Size: 48
   Color: {r: 1, g: 1, b: 1, a: 1}

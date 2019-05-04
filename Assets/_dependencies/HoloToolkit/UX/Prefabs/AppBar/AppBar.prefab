@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4773597359991020}
   - component: {fileID: 114050950401502068}
+  - component: {fileID: 114897236161291008}
   m_Layer: 0
   m_Name: AppBar
   m_TagString: Untagged
@@ -163,6 +164,7 @@ MonoBehaviour:
   UseRemove: 0
   UseAdjust: 1
   UseHide: 0
+  UseFilter: 1
   DisplayType: 0
   State: 0
   CustomButtonIconProfile: {fileID: 0}
@@ -171,3 +173,14 @@ MonoBehaviour:
   baseRenderer: {fileID: 1275815092924048}
   backgroundBar: {fileID: 1093294406509342}
   boundingBox: {fileID: 0}
+--- !u!114 &114897236161291008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275815092924048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad1780552d2c07b4d96e45efd892136a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

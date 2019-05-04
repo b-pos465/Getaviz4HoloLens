@@ -1,5 +1,4 @@
 ﻿using Gaze;
-using Logging;
 using Model;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
@@ -8,28 +7,25 @@ using Zenject;
 [RequireComponent(typeof(Canvas))]
 public class SourceCodeOnClickController : MonoBehaviour
 {
-    private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    [Inject]
+    private RayCaster rayCaster;
 
     [Inject]
-    RayCaster rayCaster;
+    private ModelIndicator modelIndicator;
 
     [Inject]
-    ModelIndicator modelIndicator;
+    private TapService tapService;
 
     public float distanceToCamera = 2.5f;
 
     private Canvas canvas;
-    private GestureRecognizer gestureRecognizer;
 
     void Start()
     {
         this.canvas = this.GetComponent<Canvas>();
         this.canvas.enabled = false;
 
-        log.Debug("Starting GestureRecognizer ...");
-        this.gestureRecognizer = new GestureRecognizer();
-        this.gestureRecognizer.Tapped += this.OnAirTap;
-        this.gestureRecognizer.StartCapturingGestures();
+        this.tapService.Register(this.OnAirTap);
     }
 
     private void Update()
@@ -60,11 +56,5 @@ public class SourceCodeOnClickController : MonoBehaviour
     {
         this.canvas.enabled = false;
         this.modelIndicator.gameObject.SetActive(true);
-    }
-
-    private void OnDestroy()
-    {
-        log.Debug("Stopping GestureRecognizer ...");
-        this.gestureRecognizer.StopCapturingGestures();
     }
 }

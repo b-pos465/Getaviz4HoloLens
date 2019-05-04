@@ -4,6 +4,7 @@
 using HoloToolkit.Unity.InputModule;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace HoloToolkit.Unity.UX
 {
@@ -12,6 +13,9 @@ namespace HoloToolkit.Unity.UX
     /// </summary>
     public class BoundingBoxRig : MonoBehaviour
     {
+        [Inject]
+        private DiContainer diContainer;
+
         [Header("Getaviz Entension")]
         public bool showRotationHandlesOnlyForYAxis = true;
 
@@ -256,7 +260,6 @@ namespace HoloToolkit.Unity.UX
             }
         }
 
-
         private void Start()
         {
             objectToBound = this.gameObject;
@@ -267,7 +270,7 @@ namespace HoloToolkit.Unity.UX
 
             BuildRig();
 
-            appBarInstance = Instantiate(appBarPrefab) as AppBar;
+            this.appBarInstance = this.diContainer.InstantiatePrefabForComponent<AppBar>(this.appBarPrefab);
             appBarInstance.BoundingBox = boxInstance;
             appBarInstance.HoverOffsetZ = appBarHoverOffsetZ;
 
