@@ -2209,6 +2209,22 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 781074591}
+--- !u!1 &835290863 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010302963436, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
+    type: 2}
+  m_PrefabInternal: {fileID: 2039498749}
+--- !u!114 &835290864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 835290863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b7dbdcdd39f4944b618e121422157c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &850489410
 GameObject:
   m_ObjectHideFlags: 0
@@ -4525,9 +4541,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e09d64fb13aaf449917d450b72ff3c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundsSize: {x: 1, y: 0.05, z: 1}
+  strategy: 1
   markerPrefab: {fileID: 1521413265848844, guid: 87189b2956aaf9245b3a989ebc5ac6fc,
     type: 2}
-  tolerance: 0.1
+  tolerance: 0.3
 --- !u!1001 &2039498749
 Prefab:
   m_ObjectHideFlags: 0
@@ -4570,7 +4588,7 @@ Prefab:
     - target: {fileID: 114000011154029958, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
         type: 2}
       propertyPath: drawVisualMeshes
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114000012149591842, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
         type: 2}
@@ -4606,6 +4624,11 @@ Prefab:
         type: 2}
       propertyPath: TrianglesPerCubicMeter
       value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011154029958, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
+        type: 2}
+      propertyPath: PhysicsLayer
+      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012149591842, guid: 2ed75ffdf9031c94e8bce4b3d17b9928, type: 2}
