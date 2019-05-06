@@ -1,6 +1,6 @@
 # Getaviz4HoloLens
 
-[![Unity Version](https://img.shields.io/badge/unity%20version-2018.3.8f1-green.svg)]()
+[![Unity Version](https://img.shields.io/badge/unity%20version-2017.4.26f1-green.svg)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This project is an UI port of [Getaviz](https://github.com/softvis-research/Getaviz) for *Mixed Reality* on a 

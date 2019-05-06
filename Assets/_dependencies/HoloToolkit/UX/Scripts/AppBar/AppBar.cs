@@ -40,6 +40,8 @@ namespace HoloToolkit.Unity.UX
         /// </summary>
         public float HoverOffsetZ = 0f;
 
+        public float HoverOffsetY = 0.05f;
+
         [SerializeField]
         [Tooltip("Uses an alternate follow style that works better for very oblong objects.")]
         private bool useTightFollow = false;
@@ -344,6 +346,10 @@ namespace HoloToolkit.Unity.UX
 
             // Follow our bounding box
             transform.position = smooth ? Vector3.Lerp(transform.position, finalPosition, 0.5f) : finalPosition;
+
+            Vector3 applyYOffset = this.transform.position;
+            applyYOffset.y += this.HoverOffsetY;
+            this.transform.position = applyYOffset;
 
             // Rotate on the y axis
             Vector3 eulerAngles = Quaternion.LookRotation((boundingBox.transform.position - finalPosition).normalized, Vector3.up).eulerAngles;

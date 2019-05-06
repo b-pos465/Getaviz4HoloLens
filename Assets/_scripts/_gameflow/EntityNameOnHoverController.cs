@@ -17,30 +17,30 @@ public class EntityNameOnHoverController : MonoBehaviour
 
     private void Start()
     {
-        this.text = GetComponentInChildren<Text>();
-        this.canvas = GetComponent<Canvas>();
+        this.text = this.GetComponentInChildren<Text>();
+        this.canvas = this.GetComponent<Canvas>();
     }
 
     private void Update()
     {
         this.canvas.enabled = false;
 
-        if (rayCaster.Target != null)
+        if (this.rayCaster.Target != null)
         {
-            Entity entity = rayCaster.Target.GetComponent<Entity>();
+            Entity entity = this.rayCaster.Target.GetComponent<Entity>();
             if (entity != null)
             {
-                AllocateToEntity(entity);
+                this.AllocateToEntity(entity);
             }
         }
 
-        AdjustRotationToCameraPosition();
+        this.AdjustRotationToCameraPosition();
     }
 
     private void AdjustRotationToCameraPosition()
     {
-        transform.LookAt(Camera.main.transform);
-        transform.Rotate(new Vector3(0, 180, 0));
+        this.transform.LookAt(Camera.main.transform);
+        this.transform.Rotate(new Vector3(0, 180, 0));
     }
 
     private void AllocateToEntity(Entity entity)
@@ -48,9 +48,9 @@ public class EntityNameOnHoverController : MonoBehaviour
         this.canvas.enabled = true;
 
         string prefix = entity.type == "FAMIX.Class" ? "Class" : "Package";
-        text.text = prefix + ": " + entity.name;
+        this.text.text = prefix + ": " + entity.name;
 
         Vector3 newPosition = entity.gameObject.transform.position + (entity.gameObject.GetComponent<Renderer>().bounds.size.y / 2 + 0.025f) * Vector3.up + this.offset;
-        transform.position = newPosition;
+        this.transform.position = newPosition;
     }
 }

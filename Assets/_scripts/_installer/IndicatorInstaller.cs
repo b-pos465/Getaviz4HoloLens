@@ -14,6 +14,7 @@ public class IndicatorInstaller : MonoInstaller
         this.Container.Bind<SourceCodeDialogIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SpatialMappingRootIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<AppBarIndicator>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<CursorIndicator>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<CloseButtonIndicator>().FromComponentInChildren();
     }

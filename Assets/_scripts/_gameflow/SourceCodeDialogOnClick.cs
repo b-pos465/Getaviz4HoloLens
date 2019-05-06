@@ -28,9 +28,13 @@ public class SourceCodeDialogOnClick : MonoBehaviour
 
     private void OnAirTap(TappedEventArgs tappedEventArgs)
     {
-        if (this.rayCaster.Hits && this.rayCaster.Target.GetComponent<Entity>() != null)
+        if (this.rayCaster.Hits)
         {
-            this.TriggerDialog();
+            Entity entity = this.rayCaster.Target.GetComponent<Entity>();
+            if (entity != null && entity.type == "FAMIX.Class")
+            {
+                this.TriggerDialog();
+            }
         }
     }
 
