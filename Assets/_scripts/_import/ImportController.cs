@@ -14,16 +14,15 @@ namespace Import
         private static readonly string METADATA_PATH = @"Assets/_generator-data/metaData.json";
 
         [Inject]
-        private ModelIndicator modelIndicator;
+        private ModelRootIndicator modelRootIndicator;
 
         [Inject]
         DiContainer diContainter;
 
         public GameObject entityPrefab;
 
-        [Header("ONLY DEBUG")]
+        [Header("Debug")]
         public bool importOnStartUp = false;
-
 
         private Dictionary<ID, Entity> entityDict;
 
@@ -56,8 +55,8 @@ namespace Import
 
         private GameObject BuildGameObjects(Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict)
         {
-            GameObject model = this.modelIndicator.gameObject;
-            model.transform.parent = this.modelIndicator.gameObject.transform;
+            GameObject model = this.modelRootIndicator.gameObject;
+            model.transform.parent = this.modelRootIndicator.gameObject.transform;
 
             foreach (KeyValuePair<ID, TransformAndColorInformation> entry in transformAndColorInformationDict)
             {
@@ -79,8 +78,8 @@ namespace Import
 
         private void MoveChildsToCenterPivot()
         {
-            Bounds bounds = new Bounds(this.modelIndicator.transform.position, Vector3.zero);
-            BoxCollider[] colliders = this.modelIndicator.GetComponentsInChildren<BoxCollider>();
+            Bounds bounds = new Bounds(this.modelRootIndicator.transform.position, Vector3.zero);
+            BoxCollider[] colliders = this.modelRootIndicator.GetComponentsInChildren<BoxCollider>();
             foreach (BoxCollider collider in colliders)
             {
                 bounds.Encapsulate(collider.bounds);

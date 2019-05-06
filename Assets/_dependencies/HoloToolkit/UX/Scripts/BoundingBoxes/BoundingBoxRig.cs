@@ -14,6 +14,9 @@ namespace HoloToolkit.Unity.UX
     public class BoundingBoxRig : MonoBehaviour
     {
         [Inject]
+        private AppBarIndicator appBarIndicator;
+
+        [Inject]
         private DiContainer diContainer;
 
         [Header("Getaviz Entension")]
@@ -181,20 +184,6 @@ namespace HoloToolkit.Unity.UX
             }
         }
 
-        [SerializeField]
-        [Tooltip("AppBar prefab.")]
-        private AppBar appBarPrefab = null;
-        public AppBar AppBarPrefab
-        {
-            get
-            {
-                return appBarPrefab;
-            }
-            set
-            {
-                appBarPrefab = value;
-            }
-        }
 
         private BoundingBox boxInstance;
 
@@ -270,7 +259,8 @@ namespace HoloToolkit.Unity.UX
 
             BuildRig();
 
-            this.appBarInstance = this.diContainer.InstantiatePrefabForComponent<AppBar>(this.appBarPrefab);
+            this.appBarIndicator.gameObject.SetActive(true);
+            this.appBarInstance = this.appBarIndicator.gameObject.GetComponent<AppBar>();
             appBarInstance.BoundingBox = boxInstance;
             appBarInstance.HoverOffsetZ = appBarHoverOffsetZ;
 

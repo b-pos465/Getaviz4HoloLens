@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,8 @@ namespace HoloToolkit.Unity.SpatialMapping
     [RequireComponent(typeof(SpatialMappingObserver))]
     public partial class SpatialMappingManager : Singleton<SpatialMappingManager>
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         [Tooltip("The physics layer for spatial mapping objects to be set to.")]
         public int PhysicsLayer = 31;
 
@@ -212,7 +215,11 @@ namespace HoloToolkit.Unity.SpatialMapping
 #if UNITY_WSA
             // Allow observing if a device is present (Holographic Remoting)
 #if UNITY_2017_2_OR_NEWER
-            if (!UnityEngine.XR.XRDevice.isPresent) { return; }
+            if (!UnityEngine.XR.XRDevice.isPresent)
+            {
+                log.Warn("Can not start spatial mapping observer: 'XRDevice' is not present.");
+                return;
+            }
 #else
             if (!UnityEngine.VR.VRDevice.isPresent) { return; }
 #endif

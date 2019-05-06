@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnableNavigationAfterImport : MonoBehaviour
+public class EnableAfterImport : MonoBehaviour
 {
+    [Tooltip("Those scripts will get activated when there is at least on child GameObject.")]
     public List<MonoBehaviour> scriptsToActivate;
 
     void Start()

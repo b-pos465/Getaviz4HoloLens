@@ -3,23 +3,26 @@ using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 using Zenject;
 
-public class FilterDialogController : MonoBehaviour
+public class DialogController : MonoBehaviour
 {
     [Inject]
     private RayCaster rayCaster;
 
     [Inject]
-    private ModelIndicator modelIndicator;
+    private ModelRootIndicator modelRootIndicator;
 
     [Inject]
     private CloseButtonIndicator closeButtonIndicator;
+
+    [Inject]
+    private AppBarIndicator appBarIndicator;
 
     [Inject]
     private TapService tapService;
 
     public float distanceToCamera = 2.5f;
 
-    void Start()
+    private void Start()
     {
         this.gameObject.SetActive(false);
         this.tapService.Register(this.OnTap);
@@ -55,6 +58,7 @@ public class FilterDialogController : MonoBehaviour
     private void Close()
     {
         this.gameObject.SetActive(false);
-        this.modelIndicator.gameObject.SetActive(true);
+        this.modelRootIndicator.gameObject.SetActive(true);
+        this.appBarIndicator.gameObject.SetActive(true);
     }
 }

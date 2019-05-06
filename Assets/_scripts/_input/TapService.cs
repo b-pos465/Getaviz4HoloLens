@@ -9,7 +9,7 @@ public class TapService : MonoBehaviour
 
     private GestureRecognizer gestureRecognizer;
 
-    private void Start()
+    private void Awake()
     {
         log.Debug("Starting 'GestureRecognizer' ...");
         this.gestureRecognizer = new GestureRecognizer();
@@ -18,7 +18,7 @@ public class TapService : MonoBehaviour
 
     public void Register(Action<TappedEventArgs> OnTap)
     {
-        log.Debug("Register action for air tap event: {}.", OnTap);
+        log.Debug("Register action for air tap event: {} in {}.", OnTap.Method.Name, OnTap.Method.DeclaringType);
         this.gestureRecognizer.Tapped += OnTap;
     }
 

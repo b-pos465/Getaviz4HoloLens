@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using Logging;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,6 +59,8 @@ namespace HoloToolkit.Unity.SpatialMapping
     /// </summary>
     public class SpatialMappingObserver : SpatialMappingSource
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         [Tooltip("The number of triangles to calculate per cubic meter.")]
         public float TrianglesPerCubicMeter = 500f;
 
@@ -290,7 +293,7 @@ namespace HoloToolkit.Unity.SpatialMapping
 
             if (ObserverState != ObserverStates.Running)
             {
-                Debug.Log("Starting the observer.");
+                log.Debug("Starting the spatial mapping observer ...");
                 ObserverState = ObserverStates.Running;
 
                 // We want the first update immediately.
@@ -308,7 +311,7 @@ namespace HoloToolkit.Unity.SpatialMapping
 #if UNITY_WSA
             if (ObserverState == ObserverStates.Running)
             {
-                Debug.Log("Stopping the observer.");
+                log.Debug("Stopping the spatial mapping observer ...");
                 ObserverState = ObserverStates.Stopped;
 
                 surfaceWorkQueue.Clear();

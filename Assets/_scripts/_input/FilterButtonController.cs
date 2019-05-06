@@ -8,7 +8,7 @@ public class FilterButtonController : MonoBehaviour
     private static readonly string NAME = "Filter";
 
     [Inject]
-    private ModelIndicator modelIndicator;
+    private ModelRootIndicator modelRootIndicator;
 
     [Inject]
     private FilterDialogIndicator filterDialogIndicator;
@@ -28,8 +28,9 @@ public class FilterButtonController : MonoBehaviour
 
     public void OnTap()
     {
-        this.modelIndicator.gameObject.SetActive(false);
+        this.modelRootIndicator.gameObject.SetActive(false);
         this.filterDialogIndicator.gameObject.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 
     public ButtonTemplate ProvideTemplate()

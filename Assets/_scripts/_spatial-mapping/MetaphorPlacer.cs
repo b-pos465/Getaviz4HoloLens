@@ -32,19 +32,16 @@ namespace SpatialMapping
         public GameObject markerPrefab;
         public float tolerance = 0.1f;
 
+        [Header("Debug")]
+        public bool verbose = false;
+
         private GameObject plane;
-
-        private GameObject boundingBox;
-
 
         private void Start()
         {
             this.plane = Instantiate(this.markerPrefab);
             this.plane.SetActive(false);
             this.tapService.Register(this.OnTap);
-
-            this.boundingBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Destroy(this.boundingBox.GetComponent<BoxCollider>());
         }
 
         private void OnTap(TappedEventArgs tappedEventArgs)
@@ -90,7 +87,10 @@ namespace SpatialMapping
                     normal = this.CalculateAverageNormalInBounds(); ;
                 }
 
-                log.Debug("{}", normal);
+                if (this.verbose)
+                {
+                    log.Debug("{}", normal);
+                }
 
                 if (this.HitPointNormalPointsUpward(normal))
                 {
@@ -123,17 +123,12 @@ namespace SpatialMapping
                 {
                     vertices.Add(meshFilter.transform.TransformPoint(vertex));
                 }
-  
+
                 meshFilter.sharedMesh.RecalculateNormals();
                 normals.AddRange(meshFilter.sharedMesh.vertices);
             }
 
             Bounds bounds = new Bounds(hitPoint, this.boundsSize);
-
-            this.boundingBox.transform.position = bounds.center;
-            this.boundingBox.transform.localScale = bounds.size;
-            this.boundingBox.GetComponent<Renderer>().enabled = false;
-
 
             Vector3 farestCorner = hitPoint + 0.5f * bounds.size;
 
@@ -148,15 +143,14 @@ namespace SpatialMapping
                 }
             }
 
-            log.Debug("{}", verticesInsideBoundsAsIndices.Count);
+            if (this.verbose)
+            {
+                log.Debug("{}", verticesInsideBoundsAsIndices.Count);
+            }
 
             if (verticesInsideBoundsAsIndices.Count == 0)
             {
                 return this.rayCaster.HitPointNormal.normalized;
-            }
-            else if (verticesInsideBoundsAsIndices.Count > 10)
-            {
-                //return Vector3.up;
             }
 
             Vector3 normal = Vector3.zero;
