@@ -10,7 +10,7 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     private RayCaster rayCaster;
 
     [Inject]
-    private ModelRootIndicator modelRootIndicator;
+    private ModelIndicator modelIndicator;
 
     [Inject]
     private AppBarIndicator appBarIndicator;
@@ -37,11 +37,11 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     private void TriggerDialog()
     {
         bool dialogActive = this.sourceCodeDialogIndicator.gameObject.activeSelf;
-        bool modelActive = this.modelRootIndicator.gameObject.activeSelf;
+        bool modelActive = this.modelIndicator.gameObject.activeSelf;
         bool appBarActive = this.appBarIndicator.gameObject.activeSelf;
 
         this.sourceCodeDialogIndicator.gameObject.SetActive(!dialogActive);
-        this.modelRootIndicator.gameObject.SetActive(!modelActive);
+        this.modelIndicator.gameObject.SetActive(!modelActive);
         this.appBarIndicator.gameObject.SetActive(!appBarActive);
     }
 

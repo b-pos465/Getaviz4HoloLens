@@ -9,7 +9,7 @@ public class IndicatorInstaller : MonoInstaller
     {
         log.Debug("Installing Bindings ...");
 
-        this.Container.Bind<ModelRootIndicator>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<ModelIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<FilterDialogIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SourceCodeDialogIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SpatialMappingRootIndicator>().FromComponentInHierarchy().AsSingle();

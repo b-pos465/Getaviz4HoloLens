@@ -9,7 +9,7 @@ public class DialogController : MonoBehaviour
     private RayCaster rayCaster;
 
     [Inject]
-    private ModelRootIndicator modelRootIndicator;
+    private ModelIndicator modelIndicator;
 
     [Inject]
     private CloseButtonIndicator closeButtonIndicator;
@@ -58,7 +58,7 @@ public class DialogController : MonoBehaviour
     private void Close()
     {
         this.gameObject.SetActive(false);
-        this.modelRootIndicator.gameObject.SetActive(true);
+        this.modelIndicator.gameObject.SetActive(true);
         this.appBarIndicator.gameObject.SetActive(true);
     }
 }
