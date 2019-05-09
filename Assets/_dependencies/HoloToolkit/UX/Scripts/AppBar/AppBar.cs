@@ -19,6 +19,9 @@ namespace HoloToolkit.Unity.UX
     public class AppBar : InteractionReceiver
     {
         [Inject]
+        private AdjustModeController adjustModeController;
+
+        [Inject]
         private DiContainer diContainer;
 
         private float buttonWidth = 1.50f;
@@ -236,6 +239,7 @@ namespace HoloToolkit.Unity.UX
                     State = AppBarStateEnum.Manipulation;
                     // Activate BoundingBoxRig
                     boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
+                    this.adjustModeController.EnableAdjustMode();
                     break;
 
                 case "Hide":
@@ -253,6 +257,7 @@ namespace HoloToolkit.Unity.UX
                     State = AppBarStateEnum.Default;
                     // Deactivate BoundingBoxRig
                     boundingBox.Target.GetComponent<BoundingBoxRig>().Deactivate();
+                    this.adjustModeController.DisableAdjustMode();
                     break;
 
                 case "Filter":

@@ -21,6 +21,8 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     [Inject]
     private TapService tapService;
 
+    private bool active = true;
+
     void Start()
     {
         this.tapService.Register(this.OnAirTap);
@@ -28,6 +30,11 @@ public class SourceCodeDialogOnClick : MonoBehaviour
 
     private void OnAirTap(TappedEventArgs tappedEventArgs)
     {
+        if (!this.active)
+        {
+            return;
+        }
+
         if (this.rayCaster.Hits)
         {
             Entity entity = this.rayCaster.Target.GetComponent<Entity>();
@@ -52,5 +59,15 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     public void Close()
     {
         this.TriggerDialog();
+    }
+
+    public void Enable()
+    {
+        this.active = true;
+    }
+
+    public void Disable()
+    {
+        this.active = false;
     }
 }
