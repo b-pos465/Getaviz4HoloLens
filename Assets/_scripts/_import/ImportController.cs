@@ -1,6 +1,7 @@
 ﻿using Logging;
 using Model;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Zenject;
 
@@ -9,9 +10,6 @@ namespace Import
     public class ImportController : MonoBehaviour
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        private static readonly string MODEL_PATH = @"Assets/_generator-data/model.html";
-        private static readonly string METADATA_PATH = @"Assets/_generator-data/metaData.json";
 
         [Inject]
         private ModelIndicator modelIndicator;
@@ -26,8 +24,14 @@ namespace Import
 
         private Dictionary<ID, Entity> entityDict;
 
+        private string modelPath;
+        private string metaDataPath;
+
         private void Start()
         {
+            this.modelPath = Path.Combine(Application.streamingAssetsPath, "model.html");
+            this.metaDataPath = Path.Combine(Application.streamingAssetsPath, "metaData.json");
+
             if (this.importOnStartUp)
             {
                 this.Import();
@@ -38,14 +42,14 @@ namespace Import
         {
             this.entityDict = new Dictionary<ID, Entity>();
 
-            log.Debug("Importing model from {} ...", MODEL_PATH);
-            HtmlImporter htmlImporter = new HtmlImporter(MODEL_PATH);
+            log.Debug("Importing model from {} ...", this.modelPath);
+            HtmlImporter htmlImporter = new HtmlImporter(this.modelPath);
             Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict = htmlImporter.Import();
 
             GameObject modelRoot = this.BuildGameObjects(transformAndColorInformationDict);
 
-            log.Debug("Importing metadata from {} ...", METADATA_PATH);
-            JsonImporter jsonImporter = new JsonImporter(METADATA_PATH);
+            log.Debug("Importing metadata from {} ...", this.metaDataPath);
+            JsonImporter jsonImporter = new JsonImporter(this.metaDataPath);
             Dictionary<ID, MetaData> metaDataDict = jsonImporter.Import();
 
             this.FillMetaDataInformation(metaDataDict);

@@ -37,6 +37,13 @@ namespace SpatialMapping
 
         private GameObject plane;
 
+        // TODO: Understand why this is necessary.
+#if UNITY_EDITOR
+        private float initialModelScale = 0.0005f;
+#elif UNITY_WSA_10_0
+        private float initialModelScale = 0.005f;
+#endif
+
         private void Start()
         {
             this.plane = Instantiate(this.markerPrefab);
@@ -68,7 +75,8 @@ namespace SpatialMapping
 
         void ScaleModel(GameObject model, Vector3 center)
         {
-            model.transform.localScale = 0.0005f * Vector3.one;
+            log.Debug("Scaling model by factor {}.", this.initialModelScale);
+            model.transform.localScale = this.initialModelScale * Vector3.one;
             model.transform.position = center;
         }
 
