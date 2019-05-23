@@ -32,6 +32,7 @@
 			}
 
 			fixed4 _Color;
+			fixed4 _OrthogonalColor;
 
 			fixed4 frag(v2f i) : SV_Target
 			{
@@ -40,7 +41,7 @@
 				float dotProduct = dot(i.worldNormal, cameraForward);
 
 				fixed4 c = 0;
-				c.rgb = _Color * dotProduct;
+				c.rgb = _Color * ((dotProduct * 0.6f) + 0.4f);
 				return c;
 		}
 		ENDCG
