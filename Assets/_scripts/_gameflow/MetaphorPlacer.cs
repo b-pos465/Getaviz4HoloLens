@@ -13,7 +13,7 @@ namespace SpatialMapping
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         [Inject]
-        private ImportController importController;
+        private ModelInstantiator modelInstantiator;
 
         [Inject]
         private RayCaster rayCaster;
@@ -65,7 +65,7 @@ namespace SpatialMapping
         {
             if (this.rayCaster.Hits)
             {
-                GameObject model = this.importController.Import();
+                GameObject model = this.modelInstantiator.Import();
                 this.ScaleModel(model, this.rayCaster.HitPoint);
 
                 Destroy(this.plane);

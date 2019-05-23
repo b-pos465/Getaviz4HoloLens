@@ -1,38 +1,32 @@
-﻿using Logging;
-using Model;
+﻿using Model;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using Zenject;
 
 namespace Import
 {
-    public class ImportController : MonoBehaviour
+    public class ModelInstantiator : MonoBehaviour
     {
-        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        [Inject]
+        private ModelProvider modelProvider;
 
         [Inject]
         private ModelIndicator modelIndicator;
 
         [Inject]
-        DiContainer diContainter;
+        private DiContainer diContainer;
 
         public GameObject entityPrefab;
 
         [Header("Debug")]
-        public bool importOnStartUp = false;
+        public bool instantiateOnStartUp = false;
 
         private Dictionary<ID, Entity> entityDict;
 
-        private string modelPath;
-        private string metaDataPath;
 
         private void Start()
         {
-            this.modelPath = Path.Combine(Application.streamingAssetsPath, "model.html");
-            this.metaDataPath = Path.Combine(Application.streamingAssetsPath, "metaData.json");
-
-            if (this.importOnStartUp)
+            if (this.instantiateOnStartUp)
             {
                 this.Import();
             }
@@ -42,17 +36,9 @@ namespace Import
         {
             this.entityDict = new Dictionary<ID, Entity>();
 
-            log.Debug("Importing model from {} ...", this.modelPath);
-            HtmlImporter htmlImporter = new HtmlImporter(this.modelPath);
-            Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict = htmlImporter.Import();
-
+            Dictionary<ID, TransformAndColorInformation> transformAndColorInformationDict = this.modelProvider.ProvideTransformAndColorInformation();
             GameObject modelRoot = this.BuildGameObjects(transformAndColorInformationDict);
-
-            log.Debug("Importing metadata from {} ...", this.metaDataPath);
-            JsonImporter jsonImporter = new JsonImporter(this.metaDataPath);
-            Dictionary<ID, MetaData> metaDataDict = jsonImporter.Import();
-
-            this.FillMetaDataInformation(metaDataDict);
+            this.FillMetaDataInformation(this.modelProvider.ProvideMetaData());
 
             return modelRoot;
         }
@@ -66,7 +52,7 @@ namespace Import
             {
                 TransformAndColorInformation transformAndColorInformation = entry.Value;
 
-                GameObject entity = this.diContainter.InstantiatePrefab(this.entityPrefab);
+                GameObject entity = this.diContainer.InstantiatePrefab(this.entityPrefab);
                 entity.transform.parent = model.transform;
                 entity.transform.position = transformAndColorInformation.Position;
                 entity.transform.localScale = transformAndColorInformation.Scale;

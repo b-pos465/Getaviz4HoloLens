@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 32161900}
   - component: {fileID: 32161901}
   m_Layer: 0
-  m_Name: Importer Controller
+  m_Name: Model Instantiator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 1427651235729496, guid: 9b5b37f436815044d99836b5a9092747,
     type: 2}
-  importOnStartUp: 0
+  instantiateOnStartUp: 0
 --- !u!1001 &122919982
 Prefab:
   m_ObjectHideFlags: 0
@@ -1843,7 +1843,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 815834858}
-  m_Text: ColorChangeOnHover.cs
+  m_Text: Logging.LogFormatter
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
