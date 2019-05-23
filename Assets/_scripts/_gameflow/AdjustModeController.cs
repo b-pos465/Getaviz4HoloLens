@@ -19,7 +19,6 @@ public class AdjustModeController : MonoBehaviour
         this.centralHoverController.DisableHoverEffect();
     }
 
-
     public void DisableAdjustMode()
     {
         this.entityNameOnHoverIndicator.gameObject.SetActive(true);

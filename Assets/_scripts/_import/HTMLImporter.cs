@@ -27,9 +27,9 @@ namespace Import
         public Dictionary<ID, TransformAndColorInformation> Import()
         {
             string modelAsHTML = File.ReadAllText(this.path, Encoding.UTF8);
-            string modelAsXML = CutHTMLBoilerplate(modelAsHTML);
+            string modelAsXML = this.CutHTMLBoilerplate(modelAsHTML);
 
-            return ExtractTransformAndColorInformationFromXMLModel(modelAsXML);
+            return this.ExtractTransformAndColorInformationFromXMLModel(modelAsXML);
         }
 
         private string CutHTMLBoilerplate(string modelAsHTML)
@@ -50,9 +50,9 @@ namespace Import
             {
 
                 ID id = ID.From(xElement.Attribute(ATTRIBUTE_ID).Value);
-                Vector3 position = ParsePosition(xElement);
-                Vector3 scale = ParseScale(xElement);
-                Color color = ParseColor(xElement);
+                Vector3 position = this.ParsePosition(xElement);
+                Vector3 scale = this.ParseScale(xElement);
+                Color color = this.ParseColor(xElement);
 
                 TransformAndColorInformation transformAndColorInformation = new TransformAndColorInformation(position, scale, color);
                 resultDictionary.Add(id, transformAndColorInformation);

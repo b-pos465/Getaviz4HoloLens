@@ -20,5 +20,6 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<CentralHoverController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SourceCodeDialogOnClick>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<AdjustModeController>().FromComponentSibling();
+        this.Container.Bind<SourceCodeScrollViewController>().FromComponentInHierarchy().AsSingle();
     }
 }

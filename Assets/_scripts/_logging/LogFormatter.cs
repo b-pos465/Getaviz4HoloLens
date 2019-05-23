@@ -18,7 +18,7 @@ namespace Logging
 
         public string Format(string logMessage, params object[] args)
         {
-            int placeholderCount = DeterminePlaceholderCount(logMessage);
+            int placeholderCount = this.DeterminePlaceholderCount(logMessage);
 
             if (placeholderCount != args.Length)
             {
@@ -33,7 +33,7 @@ namespace Logging
 
                 messageParts.Add(logMessage.Substring(0, placeholderPosition));
 
-                messageParts.Add(Format(args[i]));
+                messageParts.Add(this.Format(args[i]));
 
                 logMessage = logMessage.Substring(placeholderPosition + this.placeholder.Length);
             }
