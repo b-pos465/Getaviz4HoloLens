@@ -25,10 +25,10 @@ public class SourceCodeDialogOnClick : MonoBehaviour
 
     void Start()
     {
-        this.tapService.Register(this.OnAirTap);
+        this.tapService.Register(this.OnTap);
     }
 
-    private void OnAirTap(TappedEventArgs tappedEventArgs)
+    private void OnTap(TappedEventArgs tappedEventArgs)
     {
         if (!this.active)
         {

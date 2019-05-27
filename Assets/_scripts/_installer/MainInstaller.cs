@@ -12,7 +12,8 @@ public class MainInstaller : MonoInstaller
     {
         log.Debug("Installing Bindings ...");
 
-        this.Container.Bind<ModelProvider>().AsSingle();
+        this.Container.Bind<FlatModelProvider>().AsSingle();
+        this.Container.Bind<TreeModelProvider>().AsSingle();
         this.Container.Bind<ModelInstantiator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<GazeStabilizer>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<RayCaster>().FromComponentInHierarchy().AsSingle();
@@ -22,5 +23,6 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<SourceCodeDialogOnClick>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<AdjustModeController>().FromComponentSibling();
         this.Container.Bind<SourceCodeScrollViewController>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<FilterDialogController>().FromComponentInHierarchy().AsSingle();
     }
 }

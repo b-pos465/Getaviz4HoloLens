@@ -8,7 +8,7 @@ namespace Import
     public class ModelInstantiator : MonoBehaviour
     {
         [Inject]
-        private ModelProvider modelProvider;
+        private FlatModelProvider modelProvider;
 
         [Inject]
         private ModelIndicator modelIndicator;
