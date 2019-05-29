@@ -16,9 +16,8 @@ public class IndicatorInstaller : MonoInstaller
         this.Container.Bind<AppBarIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<CursorIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<EntityNameOnHoverIndicator>().FromComponentInHierarchy().AsSingle();
-        this.Container.Bind<SourceCodeScrollDownButtonIndicator>().FromComponentInHierarchy().AsSingle();
-        this.Container.Bind<SourceCodeScrollUpButtonIndicator>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<CloseButtonIndicator>().FromComponentInChildren();
+        this.Container.Bind<IconIndicator>().FromComponentInChildren();
     }
 }

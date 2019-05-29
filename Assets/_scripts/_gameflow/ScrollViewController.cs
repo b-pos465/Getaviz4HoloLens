@@ -5,20 +5,19 @@ using UnityEngine.UI;
 using UnityEngine.XR.WSA.Input;
 using Zenject;
 
-public class SourceCodeScrollViewController : MonoBehaviour
+public class ScrollViewController : MonoBehaviour
 {
-    [Inject]
-    private SourceCodeScrollDownButtonIndicator sourceCodeScrollDownButtonIndicator;
-
-    [Inject]
-    private SourceCodeScrollUpButtonIndicator SourceCodeScrollUpButtonIndicator;
-
     [Inject]
     private RayCaster rayCaster;
 
     [Inject]
     private TapService tapService;
 
+    [Header("Buttons")]
+    public GameObject scrollUpButton;
+    public GameObject scrollDownButton;
+
+    [Header("Configuration")]
     public float range = 0.5f;
     public float durationInSeconds = 0.5f;
 
@@ -47,12 +46,12 @@ public class SourceCodeScrollViewController : MonoBehaviour
 
     private bool HitsScrollDownButton()
     {
-        return this.rayCaster.Target == this.sourceCodeScrollDownButtonIndicator.gameObject;
+        return this.rayCaster.Target == this.scrollDownButton;
     }
 
     private bool HitsScrollUpButton()
     {
-        return this.rayCaster.Target == this.SourceCodeScrollUpButtonIndicator.gameObject;
+        return this.rayCaster.Target == this.scrollUpButton;
     }
 
     private void ScrollDown()

@@ -26,5 +26,10 @@ namespace Model.Tree
         {
             return this.Descandents.Count == 0;
         }
+
+        public bool IsRoot()
+        {
+            return this.Ancestor == null;
+        }
     }
 }
