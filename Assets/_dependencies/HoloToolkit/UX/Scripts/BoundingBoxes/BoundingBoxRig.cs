@@ -205,9 +205,9 @@ namespace HoloToolkit.Unity.UX
 
         private bool showRig = false;
 
-        private Vector3 scaleHandleSize = new Vector3(0.04f, 0.04f, 0.04f);
+        private Vector3 scaleHandleSize = new Vector3(0.06f, 0.06f, 0.06f);
 
-        private Vector3 rotateHandleSize = new Vector3(0.04f, 0.04f, 0.04f);
+        private Vector3 rotateHandleSize = new Vector3(0.07f, 0.07f, 0.07f);
 
         private bool destroying = false;
 
