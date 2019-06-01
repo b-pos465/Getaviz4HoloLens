@@ -1,51 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Logging;
 using UnityEngine;
 
 public class ModelRenderingStateController : MonoBehaviour
 {
-    public bool drawWireframe = false;
+    private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-    private bool flagInLastFrame = false;
+    private WireframeController[] wireframeControllers;
+    private MeshRenderer[] meshRenderers;
 
-    private RenderingState state;
-    private WireframeController[] wireframeController;
-
-    private void SetRenderingState(RenderingState renderingState)
+    public void SwitchState(ModelRenderingState modelRenderingState)
     {
-        this.state = renderingState;
-        // TODO
-    }
+        this.UpdateReferencesIfNecessary();
 
-    private void Start()
-    {
-        this.wireframeController = this.GetComponentsInChildren<WireframeController>();
-    }
-
-    private void Update()
-    {
-        if (this.drawWireframe != this.flagInLastFrame)
+        if (modelRenderingState == ModelRenderingState.INVISIBLE)
         {
-            this.ToggleWireframeEffect();
-            this.flagInLastFrame = this.drawWireframe;
+            this.SetWireframesTo(false);
+            this.SetMeshRenderersTo(false);
+        }
+        else if (modelRenderingState == ModelRenderingState.WIREFRAME)
+        {
+            this.SetWireframesTo(true);
+            this.SetMeshRenderersTo(false);
+        }
+        else if (modelRenderingState == ModelRenderingState.SOLID)
+        {
+            this.SetWireframesTo(false);
+            this.SetMeshRenderersTo(true);
         }
     }
 
-    private void ToggleWireframeEffect()
+    private void SetWireframesTo(bool state)
     {
-        this.SetEnabledTo(this.drawWireframe);
-    }
+        log.Debug("Setting {} WireframeControllers to state: {}.", this.wireframeControllers.Length, state);
 
-    private void SetEnabledTo(bool state)
-    {
-        foreach (WireframeController wireframeController in this.wireframeController)
+        foreach (WireframeController wireframeController in this.wireframeControllers)
         {
             wireframeController.enabled = state;
         }
     }
 
-    public enum RenderingState
+    private void SetMeshRenderersTo(bool state)
     {
-        WIREFRAME, SOLID
+        log.Debug("Setting {} MeshRenderers to state: {}.", this.meshRenderers.Length, state);
+
+        foreach (MeshRenderer meshRenderer in this.meshRenderers)
+        {
+            meshRenderer.enabled = state;
+        }
     }
+
+    private void UpdateReferencesIfNecessary()
+    {
+        if (this.wireframeControllers == null || this.wireframeControllers.Length == 0)
+        {
+            this.wireframeControllers = this.GetComponentsInChildren<WireframeController>();
+        }
+
+        if (this.meshRenderers == null || this.meshRenderers.Length == 0)
+        {
+            this.meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
+        }
+    }
+}
+
+public enum ModelRenderingState
+{
+    INVISIBLE, WIREFRAME, SOLID
 }

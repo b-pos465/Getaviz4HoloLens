@@ -2,9 +2,12 @@
 using Zenject;
 using UnityEngine.UI;
 using System.Collections;
+using Logging;
 
 public class LoadingTextController : MonoBehaviour
 {
+    private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
     [Inject]
     private SpatialMappingRootIndicator spatialMappingRootIndicator;
 
@@ -16,6 +19,8 @@ public class LoadingTextController : MonoBehaviour
     private void Start()
     {
         this.text = this.GetComponentInChildren<Text>();
+
+        log.Debug("Disabling cursor ...");  
         this.cursorIndicator.gameObject.SetActive(false);
     }
 
@@ -44,6 +49,8 @@ public class LoadingTextController : MonoBehaviour
         }
 
         this.gameObject.SetActive(false);
+
+        log.Debug("Enabling cursor ...");
         this.cursorIndicator.gameObject.SetActive(true);
     }
 }

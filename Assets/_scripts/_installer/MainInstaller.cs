@@ -19,9 +19,7 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<RayCaster>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<TapService>().FromComponentInHierarchy().AsSingle();
 
-        this.Container.Bind<CentralHoverController>().FromComponentInHierarchy().AsSingle();
-        this.Container.Bind<SourceCodeDialogOnClick>().FromComponentInHierarchy().AsSingle();
-        this.Container.Bind<AdjustModeController>().FromComponentSibling();
         this.Container.Bind<FilterDialogController>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<ModelStateController>().FromComponentInHierarchy().AsSingle();
     }
 }

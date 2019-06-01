@@ -9,13 +9,10 @@ public class DialogController : MonoBehaviour
     private RayCaster rayCaster;
 
     [Inject]
-    private ModelIndicator modelIndicator;
-
-    [Inject]
     private CloseButtonIndicator closeButtonIndicator;
 
     [Inject]
-    private AppBarIndicator appBarIndicator;
+    private ModelStateController modelStateController;
 
     [Inject]
     private TapService tapService;
@@ -37,8 +34,6 @@ public class DialogController : MonoBehaviour
 
     private void Close()
     {
-        this.gameObject.SetActive(false);
-        this.modelIndicator.gameObject.SetActive(true);
-        this.appBarIndicator.gameObject.SetActive(true);
+        this.modelStateController.SwitchState(ModelState.INTERACTABLE);
     }
 }

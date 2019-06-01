@@ -10,7 +10,7 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     private RayCaster rayCaster;
 
     [Inject]
-    private ModelIndicator modelIndicator;
+    private ModelStateController modelStateController;
 
     [Inject]
     private AppBarIndicator appBarIndicator;
@@ -21,8 +21,6 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     [Inject]
     private TapService tapService;
 
-    private bool active = true;
-
     void Start()
     {
         this.tapService.Register(this.OnTap);
@@ -30,44 +28,13 @@ public class SourceCodeDialogOnClick : MonoBehaviour
 
     private void OnTap(TappedEventArgs tappedEventArgs)
     {
-        if (!this.active)
-        {
-            return;
-        }
-
         if (this.rayCaster.Hits)
         {
             Entity entity = this.rayCaster.Target.GetComponent<Entity>();
             if (entity != null && entity.type == "FAMIX.Class")
             {
-                this.TriggerDialog();
+                this.modelStateController.SwitchState(ModelState.SOURCECODE);
             }
         }
-    }
-
-    private void TriggerDialog()
-    {
-        bool dialogActive = this.sourceCodeDialogIndicator.gameObject.activeSelf;
-        bool modelActive = this.modelIndicator.gameObject.activeSelf;
-        bool appBarActive = this.appBarIndicator.gameObject.activeSelf;
-
-        this.sourceCodeDialogIndicator.gameObject.SetActive(!dialogActive);
-        this.modelIndicator.gameObject.SetActive(!modelActive);
-        this.appBarIndicator.gameObject.SetActive(!appBarActive);
-    }
-
-    public void Close()
-    {
-        this.TriggerDialog();
-    }
-
-    public void Enable()
-    {
-        this.active = true;
-    }
-
-    public void Disable()
-    {
-        this.active = false;
     }
 }

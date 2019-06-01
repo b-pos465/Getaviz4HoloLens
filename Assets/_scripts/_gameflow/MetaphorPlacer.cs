@@ -13,7 +13,10 @@ namespace SpatialMapping
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         [Inject]
-        private ModelInstantiator modelInstantiator;
+        private ModelIndicator modelIndicator;
+
+        [Inject]
+        private ModelStateController modelStateController;
 
         [Inject]
         private RayCaster rayCaster;
@@ -35,29 +38,13 @@ namespace SpatialMapping
         [Header("Debug")]
         public bool verbose = false;
 
-        private GameObject plane;
-
-        // TODO: Understand why this is necessary.
-#if UNITY_EDITOR
-        private float initialModelScale = 0.0005f;
-#elif UNITY_WSA_10_0
-        private float initialModelScale = 0.005f;
-#endif
-
         private void Start()
         {
-            this.plane = Instantiate(this.markerPrefab);
-            this.plane.SetActive(false);
             this.tapService.Register(this.OnTap);
         }
 
         private void OnTap(TappedEventArgs tappedEventArgs)
         {
-            if (this.plane == null)
-            {
-                return;
-            }
-
             this.ShootRayAndPlaceModelIfPossible();
         }
 
@@ -65,19 +52,10 @@ namespace SpatialMapping
         {
             if (this.rayCaster.Hits)
             {
-                GameObject model = this.modelInstantiator.Import();
-                this.ScaleModel(model, this.rayCaster.HitPoint);
-
-                Destroy(this.plane);
+                this.modelIndicator.transform.position = this.rayCaster.HitPoint;
+                this.modelStateController.SwitchState(ModelState.INTERACTABLE);
                 Destroy(this);
             }
-        }
-
-        void ScaleModel(GameObject model, Vector3 center)
-        {
-            log.Debug("Scaling model by factor {}.", this.initialModelScale);
-            model.transform.localScale = this.initialModelScale * Vector3.one;
-            model.transform.position = center;
         }
 
         void Update()
@@ -102,13 +80,12 @@ namespace SpatialMapping
 
                 if (this.HitPointNormalPointsUpward(normal))
                 {
-                    this.plane.SetActive(true);
-                    this.plane.transform.position = this.rayCaster.HitPoint;
-                    this.plane.transform.up = this.transform.up;
+                    this.modelStateController.SwitchState(ModelState.PLACEMENT_VISIBLE);
+                    this.modelIndicator.transform.position = this.rayCaster.HitPoint;
                 }
                 else
                 {
-                    this.plane.SetActive(false);
+                    this.modelStateController.SwitchState(ModelState.PLACEMENT_INVISIBLE);
                 }
             }
         }
@@ -176,6 +153,11 @@ namespace SpatialMapping
             bool yIsPositive = hitPointNormal.y > 0f;
 
             return xIsSmallEnough && zIsSmallEnough && yIsPositive;
+        }
+
+        private void OnDestroy()
+        {
+            this.tapService.Unregister(this.OnTap);
         }
     }
 

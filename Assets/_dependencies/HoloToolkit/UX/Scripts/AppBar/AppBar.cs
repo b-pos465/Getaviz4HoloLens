@@ -19,7 +19,7 @@ namespace HoloToolkit.Unity.UX
     public class AppBar : InteractionReceiver
     {
         [Inject]
-        private AdjustModeController adjustModeController;
+        private ModelStateController modelStateController;
 
         [Inject]
         private DiContainer diContainer;
@@ -239,7 +239,7 @@ namespace HoloToolkit.Unity.UX
                     State = AppBarStateEnum.Manipulation;
                     // Activate BoundingBoxRig
                     boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
-                    this.adjustModeController.EnableAdjustMode();
+                    this.modelStateController.SwitchState(ModelState.TRANSFORM);
                     break;
 
                 case "Hide":
@@ -257,7 +257,7 @@ namespace HoloToolkit.Unity.UX
                     State = AppBarStateEnum.Default;
                     // Deactivate BoundingBoxRig
                     boundingBox.Target.GetComponent<BoundingBoxRig>().Deactivate();
-                    this.adjustModeController.DisableAdjustMode();
+                    this.modelStateController.SwitchState(ModelState.INTERACTABLE);
                     break;
 
                 case "Filter":

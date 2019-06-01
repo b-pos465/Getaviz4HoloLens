@@ -25,7 +25,7 @@ public class ColorChangeOnHover : MonoBehaviour
         this.defaultColor = this.meshRenderer.material.color;
     }
 
-    void Update()
+    private void Update()
     {
         if (this.rayCaster.Hits && this.rayCaster.Target == this.gameObject)
         {
@@ -48,6 +48,14 @@ public class ColorChangeOnHover : MonoBehaviour
             {
                 this.meshRenderer.material.SetColor("_Color", this.defaultColor);
             }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (this.meshRenderer != null)
+        {
+            this.meshRenderer.material.SetColor("_Color", this.defaultColor);
         }
     }
 

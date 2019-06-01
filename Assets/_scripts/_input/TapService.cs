@@ -22,6 +22,12 @@ public class TapService : MonoBehaviour
         this.gestureRecognizer.Tapped += OnTap;
     }
 
+    public void Unregister(Action<TappedEventArgs> OnTap)
+    {
+        log.Debug("Unregister action for air tap event: {} in {}.", OnTap.Method.Name, OnTap.Method.DeclaringType);
+        this.gestureRecognizer.Tapped -= OnTap;
+    }
+
     private void OnDestroy()
     {
         log.Debug("Stopping 'GestureRecognizer' ...");

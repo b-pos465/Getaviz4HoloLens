@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Logging;
+using Model;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -7,6 +8,8 @@ namespace Import
 {
     public class ModelInstantiator : MonoBehaviour
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         [Inject]
         private FlatModelProvider modelProvider;
 
@@ -18,21 +21,33 @@ namespace Import
 
         public GameObject entityPrefab;
 
-        [Header("Debug")]
-        public bool instantiateOnStartUp = false;
-
         private Dictionary<ID, Entity> entityDict;
 
+        // TODO: Understand why this is necessary.
+#if UNITY_EDITOR
+        private float initialModelScale = 0.0005f;
+#elif UNITY_WSA_10_0
+        private float initialModelScale = 0.005f;
+#endif
 
-        private void Start()
+        private void Awake()
         {
-            if (this.instantiateOnStartUp)
+            GameObject model = this.InstantiateCity();
+            this.ScaleModel(model);
+        }
+
+        private void ScaleModel(GameObject model)
+        {
+            log.Debug("Scaling model by factor {}.", this.initialModelScale);
+            model.transform.localScale = this.initialModelScale * Vector3.one;
+
+            foreach (LineRenderer lineRenderer in model.GetComponentsInChildren<LineRenderer>())
             {
-                this.Import();
+                lineRenderer.widthMultiplier = this.initialModelScale;
             }
         }
 
-        public GameObject Import()
+        private GameObject InstantiateCity()
         {
             this.entityDict = new Dictionary<ID, Entity>();
 
