@@ -15,5 +15,15 @@ namespace Model
         public GameObject calledBy;
         public GameObject accesses;
         public GameObject belongsTo;
+
+        public bool IsClass()
+        {
+            return this.type == "FAMIX.Class";
+        }
+
+        public bool IsPackage()
+        {
+            return this.type != "FAMIX.Class";
+        }
     }
 }
