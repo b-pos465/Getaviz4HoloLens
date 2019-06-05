@@ -1,13 +1,12 @@
 ﻿using Model.Tree;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
 public class AutoCompleteEntryController : MonoBehaviour
 {
     [Inject]
-    private FilterDialogController filterDialogController;
+    private AutoCompleteController autoCompleteController;
 
     [Inject]
     private IconIndicator iconIndicator;
@@ -39,23 +38,10 @@ public class AutoCompleteEntryController : MonoBehaviour
         this.rawImage = this.iconIndicator.gameObject.GetComponent<RawImage>();
     }
 
-    private void Start()
+    private void Update()
     {
-        this.AddPointerUpEvent();
-    }
-
-    private void AddPointerUpEvent()
-    {
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerUp;
-        entry.callback.AddListener((data) => { this.OnPointerUp((PointerEventData)data); });
-
-        this.GetComponent<EventTrigger>().triggers.Add(entry);
-    }
-
-    public void OnPointerUp(PointerEventData pointerEventData)
-    {
-        this.filterDialogController.SelectEntry(this.entityNode);
+        bool isSelected = this.entityNode == this.autoCompleteController.CurrentEntityNode;
+        this.text.fontStyle = isSelected ? FontStyle.Bold : FontStyle.Normal;
     }
 
     private void SetEntityNode(EntityNode entityNode)
@@ -63,10 +49,5 @@ public class AutoCompleteEntryController : MonoBehaviour
         this.entityNode = entityNode;
         this.text.text = entityNode.Name;
         this.rawImage.texture = entityNode.IsLeaf() ? this.classSprite : this.packageSprite;
-
-        if (this.entityNode == this.filterDialogController.CurrentEntityNode)
-        {
-            this.text.fontStyle = FontStyle.Bold;
-        }
     }
 }

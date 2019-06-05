@@ -38,9 +38,9 @@ GameObject:
   - component: {fileID: 224583235783090164}
   - component: {fileID: 222430072944329152}
   - component: {fileID: 114129830048911054}
-  - component: {fileID: 114626102063292060}
-  - component: {fileID: 114039394008957590}
   - component: {fileID: 114261027724820736}
+  - component: {fileID: 65094804298853928}
+  - component: {fileID: 114578511433566900}
   m_Layer: 5
   m_Name: Back Button Entry
   m_TagString: Untagged
@@ -66,17 +66,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114039394008957590
-MonoBehaviour:
+--- !u!65 &65094804298853928
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1776979207394276}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ecfebc4edeb21a4c81f48b879a9ea40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 2
+  m_Size: {x: 762.696, y: 70, z: 0.01}
+  m_Center: {x: 0, y: -35, z: 0}
 --- !u!114 &114129830048911054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,7 +144,7 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &114626102063292060
+--- !u!114 &114578511433566900
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -151,11 +152,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1776979207394276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ecfebc4edeb21a4c81f48b879a9ea40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
-  delegates: []
 --- !u!114 &114629722516512584
 MonoBehaviour:
   m_ObjectHideFlags: 1

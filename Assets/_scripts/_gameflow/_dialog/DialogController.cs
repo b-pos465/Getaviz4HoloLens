@@ -20,7 +20,6 @@ public class DialogController : MonoBehaviour
 
     private void Start()
     {
-        this.gameObject.SetActive(false);
         this.tapService.Register(this.OnTap);
     }
 

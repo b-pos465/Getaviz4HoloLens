@@ -87,8 +87,6 @@ public class ModelStateController : MonoBehaviour
         else if (newState == ModelState.TRANSFORM)
         {
             this.modelHoverController.enabled = false;
-            this.boundingBoxRig.enabled = true;
-            this.handDraggable.enabled = true;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(false);
             this.modelColliderDeactivator.enabled = false;
@@ -101,8 +99,6 @@ public class ModelStateController : MonoBehaviour
         else if (newState == ModelState.FILTER)
         {
             this.modelHoverController.enabled = true;
-            this.boundingBoxRig.enabled = true;
-            this.handDraggable.enabled = true;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(true);
             this.modelColliderDeactivator.enabled = false;
@@ -115,8 +111,6 @@ public class ModelStateController : MonoBehaviour
         else if (newState == ModelState.SOURCECODE)
         {
             this.modelHoverController.enabled = true;
-            this.boundingBoxRig.enabled = true;
-            this.handDraggable.enabled = true;
             this.sourceCodeDialogOnClick.enabled = true;
             this.entityNameOnHoverIndicator.gameObject.SetActive(true);
             this.modelColliderDeactivator.enabled = false;

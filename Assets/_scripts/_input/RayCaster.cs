@@ -37,7 +37,7 @@ namespace Gaze
                                         this.gazeStabilizer.StableRay,
                                         out hitInfo,
                                         this.length,
-                                        Physics.DefaultRaycastLayers);
+                                        Physics.AllLayers);
             if (raycastHit)
             {
                 this.Target = hitInfo.collider.gameObject;

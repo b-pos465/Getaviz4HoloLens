@@ -19,7 +19,7 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<RayCaster>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<TapService>().FromComponentInHierarchy().AsSingle();
 
-        this.Container.Bind<FilterDialogController>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<AutoCompleteController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<ModelStateController>().FromComponentInHierarchy().AsSingle();
     }
 }

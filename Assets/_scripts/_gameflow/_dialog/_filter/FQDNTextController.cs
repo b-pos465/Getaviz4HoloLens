@@ -9,7 +9,7 @@ public class FQDNTextController : MonoBehaviour
     private static readonly string FQDN_PLACEHOLDER = "...";
 
     [Inject]
-    private FilterDialogController filterDialogController;
+    private AutoCompleteController autoCompleteController;
 
     private Text text;
 
@@ -20,7 +20,7 @@ public class FQDNTextController : MonoBehaviour
 
     private void Update()
     {
-        EntityNode currentEntityNode = this.filterDialogController.CurrentEntityNode;
+        EntityNode currentEntityNode = this.autoCompleteController.CurrentEntityNode;
         string fqdn = FQDN_PLACEHOLDER;
 
         if (!currentEntityNode.IsRoot())

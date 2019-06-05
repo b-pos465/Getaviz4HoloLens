@@ -1,17 +1,26 @@
-﻿using Import;
+﻿using Gaze;
+using Import;
 using Model.Tree;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.XR.WSA.Input;
 using Zenject;
 
-public class FilterDialogController : MonoBehaviour
+public class AutoCompleteController : MonoBehaviour
 {
     [Inject]
     private TreeModelProvider treeModelProvider;
 
     [Inject]
     private DiContainer diContainer;
+
+    [Inject]
+    private RayCaster rayCaster;
+
+    [Inject]
+    private TapService tapService;
+
 
     public GameObject autoCompleteEntryPrefab;
     public GameObject backButtonEntryPrefab;
@@ -27,21 +36,43 @@ public class FilterDialogController : MonoBehaviour
 
     private void Start()
     {
+        this.tapService.Register(this.OnTap);
+
         this.CurrentEntityNode = this.treeModelProvider.ProvideTree().Root;
         this.UpdateAutoCompleteEntries();
     }
 
-    public void SelectEntry(EntityNode entityNode)
+    private void OnTap(TappedEventArgs tappedEventArgs)
     {
-        string name = entityNode.Name;
-
-        // If the user clicks on the active leaf do nothing.
-        if (entityNode == this.CurrentEntityNode)
+        if (!this.rayCaster.Hits)
         {
             return;
         }
 
-        if (this.CurrentEntityNode.IsLeaf())
+        AutoCompleteEntryController entry = this.rayCaster.Target.GetComponent<AutoCompleteEntryController>();
+        AutoCompleteBackButtonIndicator backButton = this.rayCaster.Target.GetComponent<AutoCompleteBackButtonIndicator>();
+
+        if (entry != null)
+        {
+            this.SelectEntry(entry.EntityNode);
+        }
+        else if (backButton != null)
+        {
+            this.GoBack();
+        }
+
+
+    }
+
+    private void SelectEntry(EntityNode entityNode)
+    {
+        string name = entityNode.Name;
+
+        if (entityNode == this.CurrentEntityNode)
+        {
+            this.CurrentEntityNode = this.CurrentEntityNode.Ancestor;
+        }
+        else if (this.CurrentEntityNode.IsLeaf())
         {
             this.CurrentEntityNode = this.CurrentEntityNode.Ancestor.Descandents[name];
         }

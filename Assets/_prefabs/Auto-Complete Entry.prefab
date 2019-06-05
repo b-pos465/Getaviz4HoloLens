@@ -39,9 +39,9 @@ GameObject:
   - component: {fileID: 224225192846477132}
   - component: {fileID: 222510795568491458}
   - component: {fileID: 114462752590451816}
-  - component: {fileID: 114683821015219262}
   - component: {fileID: 114384556859799566}
   - component: {fileID: 114635668260644866}
+  - component: {fileID: 65453884840656504}
   m_Layer: 5
   m_Name: Auto-Complete Entry
   m_TagString: Untagged
@@ -66,6 +66,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &65453884840656504
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1468866399011266}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 762.696, y: 70, z: 0.01}
+  m_Center: {x: 0, y: -35, z: 0}
 --- !u!114 &114384556859799566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,19 +131,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultColor: {r: 0.34509805, g: 0.34509805, b: 0.34509805, a: 0.65882355}
   hoverColor: {r: 0.5955882, g: 0.5955882, b: 0.5955882, a: 0.44705883}
---- !u!114 &114683821015219262
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1468866399011266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
-  delegates: []
 --- !u!114 &114792334813464478
 MonoBehaviour:
   m_ObjectHideFlags: 1
