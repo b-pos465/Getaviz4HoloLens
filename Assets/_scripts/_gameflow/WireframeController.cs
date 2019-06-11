@@ -1,12 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer), typeof(LineRenderer))]
 public class WireframeController : MonoBehaviour
 {
     private MeshRenderer defaultRenderer;
     private LineRenderer lineRenderer;
+
+    // TODO: Understand why this is necessary.
+#if UNITY_EDITOR
+    private float lineWidth = 0.002f;
+#elif UNITY_WSA_10_0
+        private float lineWidth = 0.0006f;
+#endif
+
 
 
     private void OnEnable()
@@ -38,6 +44,8 @@ public class WireframeController : MonoBehaviour
         {
             this.SetVerticesForLineRenderer();
         }
+
+        this.lineRenderer.widthMultiplier = this.lineWidth;
     }
 
     private void SetVerticesForLineRenderer()
@@ -69,7 +77,7 @@ public class WireframeController : MonoBehaviour
         corners[14] = corners[2];
         corners[15] = corners[9];
 
-        lineRenderer.positionCount = corners.Length;
-        lineRenderer.SetPositions(corners);
+        this.lineRenderer.positionCount = corners.Length;
+        this.lineRenderer.SetPositions(corners);
     }
 }
