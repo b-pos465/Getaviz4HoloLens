@@ -1,6 +1,5 @@
 ﻿using Gaze;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
@@ -20,8 +19,6 @@ class AutoCompleteEntryColorController : MonoBehaviour
     {
         this.image = this.GetComponent<Image>();
         this.image.color = this.defaultColor;
-
-        EventTrigger eventTrigger = this.GetComponent<EventTrigger>();
     }
 
     private void Update()

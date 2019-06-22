@@ -1553,8 +1553,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollUpButton: {fileID: 76882926}
   scrollDownButton: {fileID: 345696350}
-  range: 0.7
-  durationInSeconds: 0.6
+  range: 0.5
+  durationInSeconds: 0.5
 --- !u!222 &486198792
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2123,8 +2123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollUpButton: {fileID: 1589445471}
   scrollDownButton: {fileID: 1097644353}
-  range: 0.3
-  durationInSeconds: 0.3
+  range: 0.5
+  durationInSeconds: 0.5
 --- !u!222 &597568093
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2674,8 +2674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d5924527582884fb7810da71e5be7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minFontSize: 150
-  maxFontSize: 350
+  minFontSize: 50
+  maxFontSize: 800
   lowerDistanceThreshold: 0.1
   upperDistanceThreshold: 2
   packageOffset: {x: 0, y: 0.03, z: 0}
@@ -3178,6 +3178,7 @@ GameObject:
   - component: {fileID: 924994398}
   - component: {fileID: 924994399}
   - component: {fileID: 924994400}
+  - component: {fileID: 924994401}
   m_Layer: 5
   m_Name: Dialog - Source Code
   m_TagString: Untagged
@@ -3243,8 +3244,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e5dd0da0fcd904097543a9ba5d57fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durationInSeconds: 0.4
+  durationInSeconds: 0.5
   distanceToCamera: 2.5
+--- !u!114 &924994401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 924994395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HostTransform: {fileID: 0}
+  DistanceScale: 2
+  RotationMode: 0
+  PositionLerpSpeed: 0.2
+  RotationLerpSpeed: 0.2
+  IsDraggingEnabled: 1
 --- !u!1 &930731572
 GameObject:
   m_ObjectHideFlags: 0
@@ -6687,10 +6705,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1848397951}
   - component: {fileID: 1848397955}
-  - component: {fileID: 1848397954}
   - component: {fileID: 1848397953}
   - component: {fileID: 1848397952}
   - component: {fileID: 1848397956}
+  - component: {fileID: 1848397957}
+  - component: {fileID: 1848397954}
   m_Layer: 5
   m_Name: Dialog - Filter
   m_TagString: Untagged
@@ -6744,18 +6763,20 @@ MonoBehaviour:
 --- !u!114 &1848397954
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114341665101128472, guid: 9390b9ee64b4d6449aa3ffa89ae30d52,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1848397950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d90a84b56e63b2642b244fa6b550b87d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveWithCamera: 0
-  keepYStable: 1
-  distanceToCamera: 3
+  HostTransform: {fileID: 0}
+  DistanceScale: 2
+  RotationMode: 0
+  PositionLerpSpeed: 0.2
+  RotationLerpSpeed: 0.2
+  IsDraggingEnabled: 1
 --- !u!114 &1848397955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6785,6 +6806,19 @@ MonoBehaviour:
   backButtonEntryPrefab: {fileID: 1776979207394276, guid: 78501a434e0dcf44e804453ec4fdc0b8,
     type: 2}
   scrollViewContent: {fileID: 1515094000}
+--- !u!114 &1848397957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1848397950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e5dd0da0fcd904097543a9ba5d57fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durationInSeconds: 0.5
+  distanceToCamera: 2.5
 --- !u!1 &1879878793
 GameObject:
   m_ObjectHideFlags: 0

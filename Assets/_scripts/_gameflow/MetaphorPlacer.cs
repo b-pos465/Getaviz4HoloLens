@@ -54,6 +54,7 @@ namespace SpatialMapping
             {
                 this.modelIndicator.transform.position = this.rayCaster.HitPoint;
                 this.modelStateController.SwitchState(ModelState.INTERACTABLE);
+                Destroy(this.spatialMappingRootIndicator.gameObject);
                 Destroy(this);
             }
         }

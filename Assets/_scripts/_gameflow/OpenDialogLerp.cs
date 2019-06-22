@@ -9,14 +9,14 @@ public class OpenDialogLerp : MonoBehaviour {
     [Inject]
     private RayCaster rayCaster;
 
-    public float durationInSeconds = 1f;
+    public float durationInSeconds = 0.5f;
     public float distanceToCamera = 2.5f;
 
     private void OnEnable()
     {
         GameObject hitObject = this.rayCaster.Target;
 
-        if (hitObject != null && hitObject.GetComponent<Entity>() != null)
+        if (hitObject != null)
         {
             this.StartCoroutine(this.Animate(hitObject.transform.position));
         }
@@ -25,7 +25,7 @@ public class OpenDialogLerp : MonoBehaviour {
     private IEnumerator Animate(Vector3 startPosition)
     {
         Vector3 targetPosition = Camera.main.transform.position + this.distanceToCamera * Camera.main.transform.forward;
-        targetPosition.y = 0;
+        targetPosition.y = Camera.main.transform.position.y;
 
         float progressAsPercentage = 0f;
 
