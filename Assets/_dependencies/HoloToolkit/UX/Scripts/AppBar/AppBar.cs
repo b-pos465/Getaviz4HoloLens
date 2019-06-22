@@ -24,6 +24,9 @@ namespace HoloToolkit.Unity.UX
         [Inject]
         private DiContainer diContainer;
 
+        [Inject]
+        private KeywordToCommandService keywordToCommandService;
+
         private float buttonWidth = 1.50f;
 
         /// <summary>
@@ -191,6 +194,9 @@ namespace HoloToolkit.Unity.UX
 
         public void Start()
         {
+            this.keywordToCommandService.Register(GetavizKeyword.TRANSFORM, this.OnAdjustVoiceCommand);
+            this.keywordToCommandService.Register(GetavizKeyword.DONE, this.OnDoneVoiceCommand);
+
             this.State = AppBarStateEnum.Default;
 
             this.buttons = new ButtonTemplate[1];
@@ -464,7 +470,7 @@ namespace HoloToolkit.Unity.UX
                         ButtonTypeEnum.Adjust,
                         "Adjust",
                         "AppBarAdjust",
-                        "Adjust",
+                        "Transform",
                         adjustPosition, // Always next-to-last to appear
                         0);
 
@@ -518,6 +524,20 @@ namespace HoloToolkit.Unity.UX
                 default:
                     throw new ArgumentOutOfRangeException("type", type, null);
             }
+        }
+
+        private void OnAdjustVoiceCommand()
+        {
+            this.State = AppBarStateEnum.Manipulation;
+            this.boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
+            this.modelStateController.SwitchState(ModelState.TRANSFORM);
+        }
+
+        private void OnDoneVoiceCommand()
+        {
+            this.State = AppBarStateEnum.Default;
+            this.boundingBox.Target.GetComponent<BoundingBoxRig>().Deactivate();
+            this.modelStateController.SwitchState(ModelState.INTERACTABLE);
         }
     }
 }

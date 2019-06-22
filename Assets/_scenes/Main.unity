@@ -2262,6 +2262,46 @@ MonoBehaviour:
   m_Script: {fileID: 1898958984, guid: f7b54ff4a43d4fcf81b4538b678e0bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &666212390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 666212391}
+  - component: {fileID: 666212392}
+  m_Layer: 0
+  m_Name: Voice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &666212391
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 666212390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1806362151}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &666212392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 666212390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160293bd8e5ebea49ada51e53c135274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &694339635 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000012072213228, guid: a611e772ef8ddf64d8106a9cbb70f31c,
@@ -3246,6 +3286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durationInSeconds: 0.5
   distanceToCamera: 2.5
+  isForFilter: 0
 --- !u!114 &924994401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6612,6 +6653,7 @@ Transform:
   m_Children:
   - {fileID: 1690056185}
   - {fileID: 934979646}
+  - {fileID: 666212391}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6819,6 +6861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durationInSeconds: 0.5
   distanceToCamera: 2.5
+  isForFilter: 1
 --- !u!1 &1879878793
 GameObject:
   m_ObjectHideFlags: 0
@@ -6983,6 +7026,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60a272922f364324b85590b9b0cadd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1950624582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1950624579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5eb01b4eb5bd184ab273f1381f1d41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1959688933

@@ -17,10 +17,14 @@ public class DialogController : MonoBehaviour
     [Inject]
     private TapService tapService;
 
+    [Inject]
+    private KeywordToCommandService keywordToCommandService;
+
 
     private void Start()
     {
         this.tapService.Register(this.OnTap);
+        this.keywordToCommandService.Register(GetavizKeyword.CLOSE, this.OnCloseVoiceCommand);
     }
 
     private void OnTap(TappedEventArgs tappedEventArgs)
@@ -29,6 +33,11 @@ public class DialogController : MonoBehaviour
         {
             this.Close();
         }
+    }
+
+    private void OnCloseVoiceCommand()
+    {
+        this.Close();
     }
 
     private void Close()

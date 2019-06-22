@@ -18,6 +18,7 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<GazeStabilizer>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<RayCaster>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<TapService>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<KeywordToCommandService>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<AutoCompleteController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<ModelStateController>().FromComponentInHierarchy().AsSingle();

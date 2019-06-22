@@ -13,6 +13,9 @@ public class ScrollViewController : MonoBehaviour
     [Inject]
     private TapService tapService;
 
+    [Inject]
+    private KeywordToCommandService keywordToCommandService;
+
     [Header("Buttons")]
     public GameObject scrollUpButton;
     public GameObject scrollDownButton;
@@ -27,6 +30,24 @@ public class ScrollViewController : MonoBehaviour
     {
         this.scrollRect = this.GetComponent<ScrollRect>();
         this.tapService.Register(this.OnTap);
+        this.keywordToCommandService.Register(GetavizKeyword.UP, this.OnUpVoiceCommand);
+        this.keywordToCommandService.Register(GetavizKeyword.DOWN, this.OnDownVoiceCommand);
+    }
+
+    private void OnUpVoiceCommand()
+    {
+        if (this.gameObject.activeInHierarchy)
+        {
+            this.ScrollUp();
+        }
+    }
+
+    private void OnDownVoiceCommand()
+    {
+        if (this.gameObject.activeInHierarchy)
+        {
+            this.ScrollDown();
+        }
     }
 
     private void OnTap(TappedEventArgs tappedEventArgs)

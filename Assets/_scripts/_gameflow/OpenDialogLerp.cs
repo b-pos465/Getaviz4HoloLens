@@ -1,19 +1,29 @@
 ﻿using Gaze;
-using Model;
 using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class OpenDialogLerp : MonoBehaviour {
-
+public class OpenDialogLerp : MonoBehaviour
+{
     [Inject]
     private RayCaster rayCaster;
+
+    [Inject]
+    private AppBarIndicator appBarIndicator;
 
     public float durationInSeconds = 0.5f;
     public float distanceToCamera = 2.5f;
 
+    public bool isForFilter = false;
+
     private void OnEnable()
     {
+        if (this.isForFilter)
+        {
+            this.StartCoroutine(this.Animate(this.appBarIndicator.gameObject.transform.position));
+            return;
+        }
+
         GameObject hitObject = this.rayCaster.Target;
 
         if (hitObject != null)
