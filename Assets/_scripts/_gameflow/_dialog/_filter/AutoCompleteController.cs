@@ -21,6 +21,9 @@ public class AutoCompleteController : MonoBehaviour
     [Inject]
     private TapService tapService;
 
+    [Inject]
+    private ButtonClickSoundService buttonClickSoundService;
+
 
     public GameObject autoCompleteEntryPrefab;
     public GameObject backButtonEntryPrefab;
@@ -54,14 +57,14 @@ public class AutoCompleteController : MonoBehaviour
 
         if (entry != null)
         {
+            this.buttonClickSoundService.PlayButtonClickSound();
             this.SelectEntry(entry.EntityNode);
         }
         else if (backButton != null)
         {
+            this.buttonClickSoundService.PlayButtonClickSound();
             this.GoBack();
         }
-
-
     }
 
     private void SelectEntry(EntityNode entityNode)

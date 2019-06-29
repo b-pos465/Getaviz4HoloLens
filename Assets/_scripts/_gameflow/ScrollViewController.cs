@@ -16,6 +16,9 @@ public class ScrollViewController : MonoBehaviour
     [Inject]
     private KeywordToCommandService keywordToCommandService;
 
+    [Inject]
+    private ButtonClickSoundService buttonClickSoundService;
+
     [Header("Buttons")]
     public GameObject scrollUpButton;
     public GameObject scrollDownButton;
@@ -77,6 +80,7 @@ public class ScrollViewController : MonoBehaviour
 
     private void ScrollDown()
     {
+        this.buttonClickSoundService.PlayButtonClickSound();
         float startPosition = this.scrollRect.verticalNormalizedPosition;
         float targetPosition = Mathf.Clamp01(startPosition - this.range);
 
@@ -85,6 +89,7 @@ public class ScrollViewController : MonoBehaviour
 
     private void ScrollUp()
     {
+        this.buttonClickSoundService.PlayButtonClickSound();
         float startPosition = this.scrollRect.verticalNormalizedPosition;
         float targetPosition = Mathf.Clamp01(startPosition + this.range);
 

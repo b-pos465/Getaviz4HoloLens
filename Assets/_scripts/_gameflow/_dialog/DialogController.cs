@@ -12,6 +12,9 @@ public class DialogController : MonoBehaviour
     private CloseButtonIndicator closeButtonIndicator;
 
     [Inject]
+    private ButtonClickSoundService buttonClickSoundService;
+
+    [Inject]
     private ModelStateController modelStateController;
 
     [Inject]
@@ -42,6 +45,7 @@ public class DialogController : MonoBehaviour
 
     private void Close()
     {
+        this.buttonClickSoundService.PlayButtonClickSound();
         this.modelStateController.SwitchState(ModelState.INTERACTABLE);
     }
 }

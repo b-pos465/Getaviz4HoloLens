@@ -19,6 +19,9 @@ namespace HoloToolkit.Unity.UX
     public class AppBar : InteractionReceiver
     {
         [Inject]
+        private ButtonClickSoundService buttonClickSoundService;
+
+        [Inject]
         private ModelStateController modelStateController;
 
         [Inject]
@@ -229,6 +232,8 @@ namespace HoloToolkit.Unity.UX
             lastTimeTapped = Time.time;
 
             base.InputClicked(obj, eventData);
+
+            this.buttonClickSoundService.PlayButtonClickSound();
 
             switch (obj.name)
             {

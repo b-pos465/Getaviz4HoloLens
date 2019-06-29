@@ -21,6 +21,9 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     [Inject]
     private TapService tapService;
 
+    [Inject]
+    private ButtonClickSoundService buttonClickSoundService;
+
     void Start()
     {
         this.tapService.Register(this.OnTap);
@@ -33,6 +36,7 @@ public class SourceCodeDialogOnClick : MonoBehaviour
             Entity entity = this.rayCaster.Target.GetComponent<Entity>();
             if (entity != null && entity.type == "FAMIX.Class")
             {
+                this.buttonClickSoundService.PlayButtonClickSound();
                 this.modelStateController.SwitchState(ModelState.SOURCECODE);
             }
         }
