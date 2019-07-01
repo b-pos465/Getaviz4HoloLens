@@ -30,6 +30,9 @@ namespace HoloToolkit.Unity.UX
         [Inject]
         private KeywordToCommandService keywordToCommandService;
 
+        public bool transformIsAllowed = true;
+        public bool filterIsAllowed = true;
+
         private float buttonWidth = 1.50f;
 
         /// <summary>
@@ -233,8 +236,6 @@ namespace HoloToolkit.Unity.UX
 
             base.InputClicked(obj, eventData);
 
-            this.buttonClickSoundService.PlayButtonClickSound();
-
             switch (obj.name)
             {
                 case "Remove":
@@ -246,11 +247,17 @@ namespace HoloToolkit.Unity.UX
                     break;
 
                 case "Adjust":
-                    // Make the bounding box active so users can manipulate it
-                    State = AppBarStateEnum.Manipulation;
-                    // Activate BoundingBoxRig
-                    boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
-                    this.modelStateController.SwitchState(ModelState.TRANSFORM);
+
+                    if (this.transformIsAllowed)
+                    {
+                        this.buttonClickSoundService.PlayButtonClickSound();
+                        // Make the bounding box active so users can manipulate it
+                        State = AppBarStateEnum.Manipulation;
+                        // Activate BoundingBoxRig
+                        boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
+                        this.modelStateController.SwitchState(ModelState.TRANSFORM);
+                    }
+                    
                     break;
 
                 case "Hide":
@@ -265,6 +272,7 @@ namespace HoloToolkit.Unity.UX
                     break;
 
                 case "Done":
+                    this.buttonClickSoundService.PlayButtonClickSound();
                     State = AppBarStateEnum.Default;
                     // Deactivate BoundingBoxRig
                     boundingBox.Target.GetComponent<BoundingBoxRig>().Deactivate();
@@ -272,7 +280,13 @@ namespace HoloToolkit.Unity.UX
                     break;
 
                 case "Filter":
-                    this.GetComponent<FilterButtonController>().OnTap();
+
+                    if (this.filterIsAllowed)
+                    {
+                        this.buttonClickSoundService.PlayButtonClickSound();
+                        this.GetComponent<FilterButtonController>().OnTap();
+                    }
+                    
                     break;
 
                 default:
@@ -533,6 +547,11 @@ namespace HoloToolkit.Unity.UX
 
         private void OnAdjustVoiceCommand()
         {
+            if (!this.transformIsAllowed)
+            {
+                return;
+            }
+
             this.State = AppBarStateEnum.Manipulation;
             this.boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
             this.modelStateController.SwitchState(ModelState.TRANSFORM);

@@ -32,6 +32,11 @@ public class KeywordToCommandService : MonoBehaviour
         this.callbackDictionary[getavizKeyword].Add(action);
     }
 
+    public void Unregister(GetavizKeyword getavizKeyword, Action action)
+    {
+        this.callbackDictionary[getavizKeyword].Remove(action);
+    }
+
     private void OnKeyword(PhraseRecognizedEventArgs args)
     {
         GetavizKeyword getavizKeyword = (GetavizKeyword)Enum.Parse(typeof(GetavizKeyword), args.text, true);

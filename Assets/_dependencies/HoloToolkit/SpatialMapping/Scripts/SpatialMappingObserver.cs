@@ -409,9 +409,7 @@ namespace HoloToolkit.Unity.SpatialMapping
         {
             if (outstandingMeshRequest == null)
             {
-                Debug.LogErrorFormat("Got OnDataReady for surface {0} while no request was outstanding.",
-                    cookedData.id.handle
-                    );
+                Destroy(this.gameObject);
 
                 return;
             }

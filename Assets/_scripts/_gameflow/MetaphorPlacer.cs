@@ -1,5 +1,4 @@
 ﻿using Gaze;
-using Import;
 using Logging;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +37,8 @@ namespace SpatialMapping
         [Header("Debug")]
         public bool verbose = false;
 
+        public bool PlacementEnabled = true;
+
         private void Start()
         {
             this.tapService.Register(this.OnTap);
@@ -45,7 +46,10 @@ namespace SpatialMapping
 
         private void OnTap(TappedEventArgs tappedEventArgs)
         {
-            this.ShootRayAndPlaceModelIfPossible();
+            if (this.PlacementEnabled)
+            {
+                this.ShootRayAndPlaceModelIfPossible();
+            }
         }
 
         void ShootRayAndPlaceModelIfPossible()

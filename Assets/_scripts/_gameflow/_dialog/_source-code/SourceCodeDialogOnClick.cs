@@ -24,13 +24,18 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     [Inject]
     private ButtonClickSoundService buttonClickSoundService;
 
-    void Start()
+    private void Start()
     {
         this.tapService.Register(this.OnTap);
     }
 
     private void OnTap(TappedEventArgs tappedEventArgs)
     {
+        if (!this.enabled)
+        {
+            return;
+        }
+        
         if (this.rayCaster.Hits)
         {
             Entity entity = this.rayCaster.Target.GetComponent<Entity>();

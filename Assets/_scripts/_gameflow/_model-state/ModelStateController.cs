@@ -21,6 +21,9 @@ public class ModelStateController : MonoBehaviour
     [Inject]
     private SourceCodeDialogIndicator sourceCodeDialogIndicator;
 
+    [Inject]
+    private AppBar appBar;
+
     private ModelHoverController modelHoverController;
     private BoundingBoxRig boundingBoxRig;
     private HandDraggable handDraggable;
@@ -30,7 +33,7 @@ public class ModelStateController : MonoBehaviour
     private ModelRotationController modelRotationController;
 
 
-    private ModelState modelState;
+    public ModelState ModelState { get; private set; }
 
     private void Start()
     {
@@ -47,7 +50,7 @@ public class ModelStateController : MonoBehaviour
 
     public void SwitchState(ModelState newState)
     {
-        if (this.modelState == newState)
+        if (this.ModelState == newState)
         {
             return;
         }
@@ -58,7 +61,7 @@ public class ModelStateController : MonoBehaviour
         }
 
         log.Debug("Setting model state to {}.", newState);
-        this.modelState = newState;
+        this.ModelState = newState;
 
         if (newState == ModelState.PLACEMENT_INVISIBLE)
         {
@@ -72,6 +75,9 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.INTERACTABLE)
         {
+            this.appBar.transformIsAllowed = true;
+            this.appBar.filterIsAllowed = true;
+
             this.modelHoverController.enabled = true;
             this.boundingBoxRig.enabled = true;
             this.handDraggable.enabled = true;
@@ -120,18 +126,33 @@ public class ModelStateController : MonoBehaviour
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(true);
         }
+        else if (newState == ModelState.TUTORIAL_TRANSFORM_ONLY)
+        {
+            this.appBar.transformIsAllowed = true;
+            this.appBar.filterIsAllowed = false;
+
+            this.modelHoverController.enabled = false;
+            this.sourceCodeDialogOnClick.enabled = false;
+            this.entityNameOnHoverIndicator.gameObject.SetActive(false);
+            this.modelColliderDeactivator.enabled = false;
+            this.modelRenderingStateController.SwitchState(ModelRenderingState.SOLID);
+            this.modelRotationController.enabled = false;
+            this.appBarIndicator.gameObject.SetActive(true);
+            this.filterDialogIndicator.gameObject.SetActive(false);
+            this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+        }
     }
 
     private bool TryingToGetBackToPlacementState(ModelState newState)
     {
-        return (newState == ModelState.PLACEMENT_VISIBLE && this.modelState != ModelState.PLACEMENT_INVISIBLE) ||
-            (newState == ModelState.PLACEMENT_INVISIBLE && this.modelState != ModelState.PLACEMENT_VISIBLE);
+        return (newState == ModelState.PLACEMENT_VISIBLE && this.ModelState != ModelState.PLACEMENT_INVISIBLE) ||
+            (newState == ModelState.PLACEMENT_INVISIBLE && this.ModelState != ModelState.PLACEMENT_VISIBLE);
     }
 
     private void SetInitialState()
     {
         log.Debug("Setting model state to {}.", ModelState.PLACEMENT_INVISIBLE);
-        this.modelState = ModelState.PLACEMENT_INVISIBLE;
+        this.ModelState = ModelState.PLACEMENT_INVISIBLE;
 
         this.appBarIndicator.gameObject.SetActive(false);
         this.filterDialogIndicator.gameObject.SetActive(false);
