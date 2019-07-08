@@ -24,6 +24,7 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<KeywordToCommandService>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<ButtonClickSoundService>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<AppBar>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<EntityNameOnHoverController>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<AutoCompleteController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<ModelStateController>().FromComponentInHierarchy().AsSingle();

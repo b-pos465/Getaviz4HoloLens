@@ -409,7 +409,10 @@ namespace HoloToolkit.Unity.SpatialMapping
         {
             if (outstandingMeshRequest == null)
             {
-                Destroy(this.gameObject);
+                if (this.gameObject != null)
+                {
+                    Destroy(this.gameObject);
+                }
 
                 return;
             }

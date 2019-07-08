@@ -114,6 +114,16 @@ public class EntityNameOnHoverController : MonoBehaviour
         this.lastEntityAllocatedTo = null;
     }
 
+    public bool IsShowingEntityName ()
+    {
+        return this.canvas.enabled;
+    }
+
+    public Entity GetCurrentEntity()
+    {
+        return this.lastEntityAllocatedTo;
+    }
+
     public enum Strategy
     {
         RELATIVE_TO_ENTITY,

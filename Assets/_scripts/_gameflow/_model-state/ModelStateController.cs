@@ -141,6 +141,51 @@ public class ModelStateController : MonoBehaviour
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
         }
+        else if (newState == ModelState.TUTORIAL_GAZE_ONLY)
+        {
+            this.appBar.transformIsAllowed = false;
+            this.appBar.filterIsAllowed = false;
+
+            this.modelHoverController.enabled = true;
+            this.sourceCodeDialogOnClick.enabled = false;
+            this.entityNameOnHoverIndicator.gameObject.SetActive(true);
+            this.modelColliderDeactivator.enabled = false;
+            this.modelRenderingStateController.SwitchState(ModelRenderingState.SOLID);
+            this.modelRotationController.enabled = false;
+            this.appBarIndicator.gameObject.SetActive(true);
+            this.filterDialogIndicator.gameObject.SetActive(false);
+            this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+        }
+        else if (newState == ModelState.TUTORIAL_SOURCECODE_ONLY)
+        {
+            this.appBar.transformIsAllowed = false;
+            this.appBar.filterIsAllowed = false;
+
+            this.modelHoverController.enabled = true;
+            this.sourceCodeDialogOnClick.enabled = true;
+            this.entityNameOnHoverIndicator.gameObject.SetActive(true);
+            this.modelColliderDeactivator.enabled = false;
+            this.modelRenderingStateController.SwitchState(ModelRenderingState.SOLID);
+            this.modelRotationController.enabled = false;
+            this.appBarIndicator.gameObject.SetActive(true);
+            this.filterDialogIndicator.gameObject.SetActive(false);
+            this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+        }
+        else if (newState == ModelState.TUTORIAL_FILTER_ONLY)
+        {
+            this.appBar.transformIsAllowed = false;
+            this.appBar.filterIsAllowed = true;
+
+            this.modelHoverController.enabled = false;
+            this.sourceCodeDialogOnClick.enabled = false;
+            this.entityNameOnHoverIndicator.gameObject.SetActive(false);
+            this.modelColliderDeactivator.enabled = false;
+            this.modelRenderingStateController.SwitchState(ModelRenderingState.SOLID);
+            this.modelRotationController.enabled = false;
+            this.appBarIndicator.gameObject.SetActive(true);
+            this.filterDialogIndicator.gameObject.SetActive(false);
+            this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+        }
     }
 
     private bool TryingToGetBackToPlacementState(ModelState newState)
