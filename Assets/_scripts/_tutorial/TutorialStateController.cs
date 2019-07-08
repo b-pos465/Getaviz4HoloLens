@@ -26,6 +26,9 @@ public class TutorialStateController : MonoBehaviour
     [Inject]
     private AutoCompleteController autoCompleteController;
 
+    [Inject]
+    private TutorialProgressBarController tutorialProgressBarController;
+
     [Header("Text to Speech")]
     public AudioSource[] textToSpeechList = new AudioSource[15];
 
@@ -53,22 +56,30 @@ public class TutorialStateController : MonoBehaviour
         {
             if (this.modelStateController.ModelState == ModelState.PLACEMENT_VISIBLE)
             {
-                bool holdWithoutInterruption = true;
-                float startTime = Time.time;
+                this.tutorialProgressBarController.EnableProgressBar();
 
-                while (Time.time - startTime < 2f)
+                bool holdWithoutInterruption = true;
+                float time = 0f;
+
+                while (time < 2.5f)
                 {
                     if (this.modelStateController.ModelState != ModelState.PLACEMENT_VISIBLE)
                     {
+                        this.tutorialProgressBarController.DisableProgressBar();
                         holdWithoutInterruption = false;
                         break;
                     }
+
+                    time += Time.deltaTime;
 
                     yield return null;
                 }
 
                 if (holdWithoutInterruption)
                 {
+                    // Wait for a few more second to make sure we don't collide wiht the success sound from the tutorial progress bar.
+                    yield return new WaitForSeconds(2f);
+
                     while (this.AtLeastOneAudioSourceIsPlaying())
                     {
                         yield return null;
@@ -187,24 +198,31 @@ public class TutorialStateController : MonoBehaviour
         {
             if (this.entityNameOnHoverController.IsShowingEntityName())
             {
+                this.tutorialProgressBarController.EnableProgressBar();
+
                 bool holdWithoutInterruption = true;
-                float startTime = Time.time;
+                float time = 0f;
 
                 Entity startEntity = this.entityNameOnHoverController.GetCurrentEntity();
 
-                while (Time.time - startTime < 2f)
+                while (time < 2f)
                 {
                     if (!this.entityNameOnHoverController.IsShowingEntityName() || this.entityNameOnHoverController.GetCurrentEntity() != startEntity)
                     {
+                        this.tutorialProgressBarController.DisableProgressBar();
                         holdWithoutInterruption = false;
                         break;
                     }
 
+                    time += Time.deltaTime;
                     yield return null;
                 }
 
                 if (holdWithoutInterruption)
                 {
+                    // Wait for a few more second to make sure we don't collide wiht the success sound from the tutorial progress bar.
+                    yield return new WaitForSeconds(1f);
+
                     this.StartCoroutine(this.WaitForOtherAudioSources(this.TapOnAClassStep));
                     break;
                 }
