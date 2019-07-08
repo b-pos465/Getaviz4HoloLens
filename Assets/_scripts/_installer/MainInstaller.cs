@@ -16,6 +16,7 @@ public class MainInstaller : MonoInstaller
 
         this.Container.Bind<FlatModelProvider>().AsSingle();
         this.Container.Bind<TreeModelProvider>().AsSingle();
+        this.Container.Bind<SourceCodeReader>().AsSingle();
         this.Container.Bind<ModelInstantiator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<MetaphorPlacer>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<GazeStabilizer>().FromComponentInHierarchy().AsSingle();
@@ -26,6 +27,9 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<AppBar>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<EntityNameOnHoverController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<TutorialProgressBarController>().FromComponentInHierarchy().AsSingle();
+
+        this.Container.Bind<SourceCodeSnippetInstantiator>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<SourceCodeClassNameController>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<AutoCompleteController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<ModelStateController>().FromComponentInHierarchy().AsSingle();
