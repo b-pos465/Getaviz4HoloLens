@@ -18,6 +18,9 @@ public class TutorialStateController : MonoBehaviour
     private ModelIndicator modelIndicator;
 
     [Inject]
+    private MenuBarController menuBarController;
+
+    [Inject]
     private EntityNameOnHoverController entityNameOnHoverController;
 
     [Inject]
@@ -116,6 +119,8 @@ public class TutorialStateController : MonoBehaviour
 
     private void RotateTheModelStep()
     {
+        this.menuBarController.gameObject.SetActive(false);
+
         this.textToSpeechList[3].Play();
         this.StartCoroutine(this.WaitForSuccessfullRotation());
     }
@@ -170,6 +175,8 @@ public class TutorialStateController : MonoBehaviour
 
     private void ClickOrSayDoneStep()
     {
+        this.menuBarController.gameObject.SetActive(true);
+
         this.textToSpeechList[6].Play();
         this.StartCoroutine(this.WaitForLeavingTheTransformMode());
     }

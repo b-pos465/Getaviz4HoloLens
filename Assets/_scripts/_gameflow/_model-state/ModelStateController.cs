@@ -145,7 +145,7 @@ public class ModelStateController : MonoBehaviour
             this.modelColliderDeactivator.enabled = false;
             this.modelRenderingStateController.SwitchState(ModelRenderingState.SOLID);
             this.modelRotationController.enabled = false;
-            this.menuBarController.gameObject.SetActive(true);
+            this.menuBarController.gameObject.SetActive(false);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
         }
@@ -157,7 +157,7 @@ public class ModelStateController : MonoBehaviour
             this.modelColliderDeactivator.enabled = false;
             this.modelRenderingStateController.SwitchState(ModelRenderingState.SOLID);
             this.modelRotationController.enabled = false;
-            this.menuBarController.gameObject.SetActive(true);
+            this.menuBarController.gameObject.SetActive(false);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
         }
