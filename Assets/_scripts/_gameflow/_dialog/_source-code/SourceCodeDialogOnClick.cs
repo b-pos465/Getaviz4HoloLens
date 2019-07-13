@@ -17,9 +17,6 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     private ModelStateController modelStateController;
 
     [Inject]
-    private AppBarIndicator appBarIndicator;
-
-    [Inject]
     private SourceCodeDialogIndicator sourceCodeDialogIndicator;
 
     [Inject]

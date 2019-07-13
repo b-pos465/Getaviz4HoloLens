@@ -14,9 +14,6 @@ namespace HoloToolkit.Unity.UX
     public class BoundingBoxRig : MonoBehaviour
     {
         [Inject]
-        private AppBarIndicator appBarIndicator;
-
-        [Inject]
         private DiContainer diContainer;
 
         [Header("Getaviz Entension")]
@@ -189,8 +186,6 @@ namespace HoloToolkit.Unity.UX
 
         private GameObject objectToBound;
 
-        private AppBar appBarInstance;
-
         private GameObject[] rotateHandles;
 
         private GameObject[] cornerHandles;
@@ -258,11 +253,6 @@ namespace HoloToolkit.Unity.UX
             boxInstance.FlattenPreference = flattenedAxis;
 
             BuildRig();
-
-            this.appBarIndicator.gameObject.SetActive(true);
-            this.appBarInstance = this.appBarIndicator.gameObject.GetComponent<AppBar>();
-            appBarInstance.BoundingBox = boxInstance;
-            appBarInstance.HoverOffsetZ = appBarHoverOffsetZ;
 
             boxInstance.IsVisible = false;
         }

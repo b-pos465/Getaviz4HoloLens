@@ -1,0 +1,5 @@
+﻿
+public enum MenuBarState
+{
+    DEFAULT, DONE_ONLY, TUTORIAL_TRANSFORM_ONLY, TUTORIAL_FILTER_ONLY
+}

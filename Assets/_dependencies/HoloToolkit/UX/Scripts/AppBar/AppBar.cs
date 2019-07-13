@@ -8,31 +8,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Zenject;
 
 namespace HoloToolkit.Unity.UX
 {
     /// <summary>
     /// Logic for the App Bar. Generates buttons, manages states.
     /// </summary>
-    [RequireComponent(typeof(FilterButtonController))]
     public class AppBar : InteractionReceiver
     {
-        [Inject]
-        private ButtonClickSoundService buttonClickSoundService;
-
-        [Inject]
-        private ModelStateController modelStateController;
-
-        [Inject]
-        private DiContainer diContainer;
-
-        [Inject]
-        private KeywordToCommandService keywordToCommandService;
-
-        public bool transformIsAllowed = true;
-        public bool filterIsAllowed = true;
-
         private float buttonWidth = 1.50f;
 
         /// <summary>
@@ -51,8 +34,6 @@ namespace HoloToolkit.Unity.UX
         /// Pushes the app bar away from the object
         /// </summary>
         public float HoverOffsetZ = 0f;
-
-        public float HoverOffsetY = 0.05f;
 
         [SerializeField]
         [Tooltip("Uses an alternate follow style that works better for very oblong objects.")]
@@ -88,7 +69,7 @@ namespace HoloToolkit.Unity.UX
 
             public bool IsEmpty
             {
-                get { return string.IsNullOrEmpty(this.Name); }
+                get { return string.IsNullOrEmpty(Name); }
             }
 
             public int DefaultPosition;
@@ -193,36 +174,30 @@ namespace HoloToolkit.Unity.UX
 
         public void Reset()
         {
-            this.State = AppBarStateEnum.Default;
-            this.FollowBoundingBox(false);
-            this.lastTimeTapped = Time.time + this.coolDownTime;
+            State = AppBarStateEnum.Default;
+            FollowBoundingBox(false);
+            lastTimeTapped = Time.time + coolDownTime;
         }
 
         public void Start()
         {
-            this.keywordToCommandService.Register(GetavizKeyword.TRANSFORM, this.OnAdjustVoiceCommand);
-            this.keywordToCommandService.Register(GetavizKeyword.DONE, this.OnDoneVoiceCommand);
+            State = AppBarStateEnum.Default;
 
-            this.State = AppBarStateEnum.Default;
-
-            this.buttons = new ButtonTemplate[1];
-            this.buttons[0] = this.GetComponent<FilterButtonController>().ProvideTemplate();
-
-            if (this.interactables.Count == 0)
+            if (interactables.Count == 0)
             {
-                this.RefreshTemplates();
-                for (int i = 0; i < this.DefaultButtons.Length; i++)
+                RefreshTemplates();
+                for (int i = 0; i < DefaultButtons.Length; i++)
                 {
-                    this.CreateButton(this.DefaultButtons[i], null);
+                    CreateButton(DefaultButtons[i], null);
                 }
 
-                for (int i = 0; i < this.buttons.Length; i++)
+                for (int i = 0; i < buttons.Length; i++)
                 {
-                    this.CreateButton(this.buttons[i], this.CustomButtonIconProfile);
+                    CreateButton(buttons[i], CustomButtonIconProfile);
                 }
             }
 
-            this.helper = new BoundingBoxHelper();
+            helper = new BoundingBoxHelper();
         }
 
         protected override void InputClicked(GameObject obj, InputClickedEventData eventData)
@@ -247,17 +222,10 @@ namespace HoloToolkit.Unity.UX
                     break;
 
                 case "Adjust":
-
-                    if (this.transformIsAllowed)
-                    {
-                        this.buttonClickSoundService.PlayButtonClickSound();
-                        // Make the bounding box active so users can manipulate it
-                        State = AppBarStateEnum.Manipulation;
-                        // Activate BoundingBoxRig
-                        boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
-                        this.modelStateController.SwitchState(ModelState.TRANSFORM);
-                    }
-                    
+                    // Make the bounding box active so users can manipulate it
+                    State = AppBarStateEnum.Manipulation;
+                    // Activate BoundingBoxRig
+                    boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
                     break;
 
                 case "Hide":
@@ -272,21 +240,9 @@ namespace HoloToolkit.Unity.UX
                     break;
 
                 case "Done":
-                    this.buttonClickSoundService.PlayButtonClickSound();
                     State = AppBarStateEnum.Default;
                     // Deactivate BoundingBoxRig
                     boundingBox.Target.GetComponent<BoundingBoxRig>().Deactivate();
-                    this.modelStateController.SwitchState(ModelState.INTERACTABLE);
-                    break;
-
-                case "Filter":
-
-                    if (this.filterIsAllowed)
-                    {
-                        this.buttonClickSoundService.PlayButtonClickSound();
-                        this.GetComponent<FilterButtonController>().OnTap();
-                    }
-                    
                     break;
 
                 default:
@@ -332,7 +288,7 @@ namespace HoloToolkit.Unity.UX
                     throw new ArgumentOutOfRangeException();
             }
 
-            GameObject newButton = this.diContainer.InstantiatePrefab(this.SquareButtonPrefab, this.buttonParent);
+            GameObject newButton = Instantiate(SquareButtonPrefab, buttonParent);
             newButton.name = template.Name;
             newButton.transform.localPosition = Vector3.zero;
             newButton.transform.localRotation = Quaternion.identity;
@@ -377,10 +333,6 @@ namespace HoloToolkit.Unity.UX
             // Follow our bounding box
             transform.position = smooth ? Vector3.Lerp(transform.position, finalPosition, 0.5f) : finalPosition;
 
-            Vector3 applyYOffset = this.transform.position;
-            applyYOffset.y += this.HoverOffsetY;
-            this.transform.position = applyYOffset;
-
             // Rotate on the y axis
             Vector3 eulerAngles = Quaternion.LookRotation((boundingBox.transform.position - finalPosition).normalized, Vector3.up).eulerAngles;
             eulerAngles.x = 0f;
@@ -416,15 +368,15 @@ namespace HoloToolkit.Unity.UX
         private void RefreshTemplates()
         {
             int numCustomButtons = 0;
-            for (int i = 0; i < this.buttons.Length; i++)
+            for (int i = 0; i < buttons.Length; i++)
             {
-                if (!this.buttons[i].IsEmpty)
+                if (!buttons[i].IsEmpty)
                 {
                     numCustomButtons++;
                 }
             }
 
-            List<ButtonTemplate> defaultButtonsList = new List<ButtonTemplate>();
+            var defaultButtonsList = new List<ButtonTemplate>();
 
             // Create our default button templates based on user preferences
             if (UseRemove)
@@ -443,14 +395,13 @@ namespace HoloToolkit.Unity.UX
                 defaultButtonsList.Add(GetDefaultButtonTemplateFromType(ButtonTypeEnum.Hide, numCustomButtons, UseHide, UseAdjust));
                 defaultButtonsList.Add(GetDefaultButtonTemplateFromType(ButtonTypeEnum.Show, numCustomButtons, UseHide, UseAdjust));
             }
-
-            this.DefaultButtons = defaultButtonsList.ToArray();
+            DefaultButtons = defaultButtonsList.ToArray();
         }
 
 #if UNITY_EDITOR
         public void EditorRefreshTemplates()
         {
-            this.RefreshTemplates();
+            RefreshTemplates();
         }
 #endif
 
@@ -489,7 +440,7 @@ namespace HoloToolkit.Unity.UX
                         ButtonTypeEnum.Adjust,
                         "Adjust",
                         "AppBarAdjust",
-                        "Transform",
+                        "Adjust",
                         adjustPosition, // Always next-to-last to appear
                         0);
 
@@ -543,25 +494,6 @@ namespace HoloToolkit.Unity.UX
                 default:
                     throw new ArgumentOutOfRangeException("type", type, null);
             }
-        }
-
-        private void OnAdjustVoiceCommand()
-        {
-            if (!this.transformIsAllowed)
-            {
-                return;
-            }
-
-            this.State = AppBarStateEnum.Manipulation;
-            this.boundingBox.Target.GetComponent<BoundingBoxRig>().Activate();
-            this.modelStateController.SwitchState(ModelState.TRANSFORM);
-        }
-
-        private void OnDoneVoiceCommand()
-        {
-            this.State = AppBarStateEnum.Default;
-            this.boundingBox.Target.GetComponent<BoundingBoxRig>().Deactivate();
-            this.modelStateController.SwitchState(ModelState.INTERACTABLE);
         }
     }
 }

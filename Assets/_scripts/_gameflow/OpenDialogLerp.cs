@@ -9,7 +9,7 @@ public class OpenDialogLerp : MonoBehaviour
     private RayCaster rayCaster;
 
     [Inject]
-    private AppBarIndicator appBarIndicator;
+    private MenuBarController menuBarController;
 
     public float durationInSeconds = 0.5f;
     public float distanceToCamera = 2.5f;
@@ -20,7 +20,7 @@ public class OpenDialogLerp : MonoBehaviour
     {
         if (this.isForFilter)
         {
-            this.StartCoroutine(this.Animate(this.appBarIndicator.gameObject.transform.position));
+            this.StartCoroutine(this.Animate(this.menuBarController.gameObject.transform.position));
             return;
         }
 

@@ -1,11 +1,12 @@
 ﻿using Logging;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ModelColliderDeactivator : MonoBehaviour
 {
     private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-    private BoxCollider[] boxColliders;
+    private List<BoxCollider> boxColliders = new List<BoxCollider>();
 
     private void OnEnable()
     {
@@ -30,9 +31,14 @@ public class ModelColliderDeactivator : MonoBehaviour
 
     private void UpdateColliderReferenceIfNecessary()
     {
-        if (this.boxColliders == null || this.boxColliders.Length == 0)
+        if (this.boxColliders == null || this.boxColliders.Count == 0)
         {
-            this.boxColliders = this.GetComponentsInChildren<BoxCollider>();
+            this.GetComponentsInChildren<BoxCollider>(this.boxColliders);
+
+            if (this.GetComponent<BoxCollider>() != null)
+            {
+                this.boxColliders.Remove(this.GetComponent<BoxCollider>());
+            }
         }
     }
 }

@@ -34,6 +34,23 @@ namespace Import
         {
             GameObject model = this.InstantiateCity();
             this.ScaleModel(model);
+            this.AppendCompleteBoxCollider();
+        }
+
+        private void AppendCompleteBoxCollider()
+        {
+            Bounds bounds = new Bounds(this.modelIndicator.transform.position, Vector3.zero);
+
+            BoxCollider[] boxColliders = this.modelIndicator.gameObject.GetComponentsInChildren<BoxCollider>();
+
+            foreach (BoxCollider collider in boxColliders)
+            {
+                bounds.Encapsulate(collider.bounds);
+            }
+
+            BoxCollider boxCollider = this.modelIndicator.gameObject.AddComponent<BoxCollider>();
+            boxCollider.size = bounds.size * 2000f;
+            boxCollider.enabled = false;
         }
 
         private void ScaleModel(GameObject model)
