@@ -35,8 +35,12 @@ public class TutorialStateController : MonoBehaviour
     [Header("Text to Speech")]
     public AudioSource[] textToSpeechList = new AudioSource[15];
 
+    public float secondsBeforeATaskGetsRepeated = 8f;
+
     private delegate bool TutorialPredicate();
     private delegate void TutorialAction();
+
+    private Coroutine speechCoroutine;
 
     private void Start()
     {
@@ -45,12 +49,37 @@ public class TutorialStateController : MonoBehaviour
 
     private void GazeAtTheTableStep()
     {
-        this.textToSpeechList[0].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[0]);
 
         this.metaphorPlacer.PlacementEnabled = false;
         this.metaphorPlacer.gameObject.SetActive(true);
 
         this.StartCoroutine(this.WaitForSuccessfullGaze());
+    }
+
+    private void PlayEveryFewSeconds(AudioSource audioSource)
+    {
+        if (this.speechCoroutine != null)
+        {
+            this.StopCoroutine(this.speechCoroutine);
+        }
+
+        this.speechCoroutine = this.StartCoroutine(this.PlayAsynchronousEveryFewSeconds(audioSource));
+    }
+
+    private IEnumerator PlayAsynchronousEveryFewSeconds(AudioSource audioSource)
+    {
+        while (true)
+        {
+            audioSource.Play();
+
+            while (audioSource.isPlaying)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(this.secondsBeforeATaskGetsRepeated);
+        }
     }
 
     private IEnumerator WaitForSuccessfullGaze()
@@ -99,7 +128,8 @@ public class TutorialStateController : MonoBehaviour
     private void UseAirTapToPlaceStep()
     {
         this.metaphorPlacer.PlacementEnabled = true;
-        this.textToSpeechList[1].Play();
+
+        this.PlayEveryFewSeconds(this.textToSpeechList[1]);
         this.StartCoroutine(
             this.WaitForPredicate(
                 () => this.modelStateController.ModelState == ModelState.INTERACTABLE,
@@ -109,7 +139,7 @@ public class TutorialStateController : MonoBehaviour
     private void ClickOrSayTransformStep()
     {
         this.modelStateController.SwitchState(ModelState.TUTORIAL_TRANSFORM_ONLY);
-        this.textToSpeechList[2].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[2]);
 
         this.StartCoroutine(
             this.WaitForPredicate(
@@ -121,7 +151,7 @@ public class TutorialStateController : MonoBehaviour
     {
         this.menuBarController.gameObject.SetActive(false);
 
-        this.textToSpeechList[3].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[3]);
         this.StartCoroutine(this.WaitForSuccessfullRotation());
     }
 
@@ -139,7 +169,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void ScaleTheModelStep()
     {
-        this.textToSpeechList[4].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[4]);
         this.StartCoroutine(this.WaitForSuccessfullScale());
     }
 
@@ -157,7 +187,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void TapAndHoldStep()
     {
-        this.textToSpeechList[5].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[5]);
         this.StartCoroutine(this.WaitForSuccessfullRepositioning());
     }
 
@@ -177,7 +207,7 @@ public class TutorialStateController : MonoBehaviour
     {
         this.menuBarController.gameObject.SetActive(true);
 
-        this.textToSpeechList[6].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[6]);
         this.StartCoroutine(this.WaitForLeavingTheTransformMode());
     }
 
@@ -195,7 +225,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void GazeAtClassesOrPackagesToInspectTheirNameStep()
     {
-        this.textToSpeechList[7].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[7]);
         this.StartCoroutine(this.GazeAtAnEntityForAtLeastTwoSeconds());
     }
 
@@ -240,7 +270,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void TapOnAClassStep()
     {
-        this.textToSpeechList[8].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[8]);
         this.modelStateController.SwitchState(ModelState.TUTORIAL_SOURCECODE_ONLY);
 
         this.StartCoroutine(this.WaitForSuccessfullTapOnClass());
@@ -258,7 +288,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void MoveTheSourceCodeDialogStep()
     {
-        this.textToSpeechList[9].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[9]);
         this.StartCoroutine(this.WaitForSuccessfullMovementOfSourceCodeDialog());
     }
 
@@ -276,7 +306,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void NavigateThroughTheSourceCodeStep()
     {
-        this.textToSpeechList[10].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[10]);
         this.StartCoroutine(this.WaitForSuccessfullSourceCodeNavigation());
     }
 
@@ -295,7 +325,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void CloseTheSourceCodeDialogStep()
     {
-        this.textToSpeechList[11].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[11]);
         this.StartCoroutine(
             this.WaitForPredicate(
                 () => this.modelStateController.ModelState == ModelState.INTERACTABLE,
@@ -305,7 +335,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void OpenTheFilterDialogStep()
     {
-        this.textToSpeechList[12].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[12]);
         this.modelStateController.SwitchState(ModelState.TUTORIAL_FILTER_ONLY);
 
         this.StartCoroutine(
@@ -317,7 +347,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void NavigateThroughTheFilteringInterface()
     {
-        this.textToSpeechList[13].Play();
+        this.PlayEveryFewSeconds(this.textToSpeechList[13]);
         this.StartCoroutine(this.WaitForSuccessfullyUsingAutoCompleteInFilterDialog());
     }
 
@@ -335,6 +365,7 @@ public class TutorialStateController : MonoBehaviour
 
     private void FinishTutorial()
     {
+        this.StopCoroutine(this.speechCoroutine);
         this.textToSpeechList[14].Play();
     }
 

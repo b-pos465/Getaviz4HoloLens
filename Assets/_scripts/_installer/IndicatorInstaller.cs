@@ -12,6 +12,7 @@ public class IndicatorInstaller : MonoInstaller
         this.Container.Bind<ModelIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<FilterDialogIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SourceCodeDialogIndicator>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<InfoDialogIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SpatialMappingRootIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<CursorIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<EntityNameOnHoverIndicator>().FromComponentInHierarchy().AsSingle();

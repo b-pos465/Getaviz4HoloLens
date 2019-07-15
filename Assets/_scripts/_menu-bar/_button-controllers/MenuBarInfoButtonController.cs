@@ -45,5 +45,6 @@ public class MenuBarInfoButtonController : MonoBehaviour
     private void TriggerInfo()
     {
         this.buttonClickSoundService.PlayButtonClickSound();
+        this.modelStateController.SwitchState(ModelState.INFO);
     }
 }

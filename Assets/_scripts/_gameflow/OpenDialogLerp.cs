@@ -11,14 +11,16 @@ public class OpenDialogLerp : MonoBehaviour
     [Inject]
     private MenuBarController menuBarController;
 
+    [Header("Animation parameters")]
     public float durationInSeconds = 0.5f;
     public float distanceToCamera = 2.5f;
 
-    public bool isForFilter = false;
+    [Tooltip("Set this to true if the dialog shall be opened from the 'Menu Bar'.")]
+    public bool animationStartsAtMenuBar = false;
 
     private void OnEnable()
     {
-        if (this.isForFilter)
+        if (this.animationStartsAtMenuBar)
         {
             this.StartCoroutine(this.Animate(this.menuBarController.gameObject.transform.position));
             return;

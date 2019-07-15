@@ -19,6 +19,9 @@ public class ModelStateController : MonoBehaviour
     private FilterDialogIndicator filterDialogIndicator;
 
     [Inject]
+    private InfoDialogIndicator infoDialogIndicator;
+
+    [Inject]
     private SourceCodeDialogIndicator sourceCodeDialogIndicator;
 
     private ModelHoverController modelHoverController;
@@ -85,6 +88,7 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.SwitchState(MenuBarState.DEFAULT);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(false);
         }
         else if (newState == ModelState.TRANSFORM)
         {
@@ -99,6 +103,7 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.SwitchState(MenuBarState.DONE_ONLY);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(false);
         }
         else if (newState == ModelState.FILTER)
         {
@@ -111,6 +116,7 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.gameObject.SetActive(false);
             this.filterDialogIndicator.gameObject.SetActive(true);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(false);
         }
         else if (newState == ModelState.SOURCECODE)
         {
@@ -123,6 +129,20 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.gameObject.SetActive(false);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(true);
+            this.infoDialogIndicator.gameObject.SetActive(false);
+        }
+        else if (newState == ModelState.INFO)
+        {
+            this.modelHoverController.enabled = true;
+            this.sourceCodeDialogOnClick.enabled = false;
+            this.entityNameOnHoverIndicator.gameObject.SetActive(true);
+            this.modelColliderDeactivator.enabled = false;
+            this.modelRenderingStateController.SwitchState(ModelRenderingState.SOLID);
+            this.modelRotationController.enabled = false;
+            this.menuBarController.gameObject.SetActive(false);
+            this.filterDialogIndicator.gameObject.SetActive(false);
+            this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(true);
         }
         else if (newState == ModelState.TUTORIAL_TRANSFORM_ONLY)
         {
@@ -136,6 +156,7 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.SwitchState(MenuBarState.TUTORIAL_TRANSFORM_ONLY);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(false);
         }
         else if (newState == ModelState.TUTORIAL_GAZE_ONLY)
         {
@@ -148,6 +169,7 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.gameObject.SetActive(false);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(false);
         }
         else if (newState == ModelState.TUTORIAL_SOURCECODE_ONLY)
         {
@@ -160,6 +182,7 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.gameObject.SetActive(false);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(false);
         }
         else if (newState == ModelState.TUTORIAL_FILTER_ONLY)
         {
@@ -173,6 +196,7 @@ public class ModelStateController : MonoBehaviour
             this.menuBarController.SwitchState(MenuBarState.TUTORIAL_FILTER_ONLY);
             this.filterDialogIndicator.gameObject.SetActive(false);
             this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+            this.infoDialogIndicator.gameObject.SetActive(false);
         }
     }
 
@@ -189,6 +213,8 @@ public class ModelStateController : MonoBehaviour
 
         this.filterDialogIndicator.gameObject.SetActive(false);
         this.sourceCodeDialogIndicator.gameObject.SetActive(false);
+        this.infoDialogIndicator.gameObject.SetActive(false);
+
         this.modelHoverController.enabled = false;
         this.boundingBoxRig.enabled = false;
         this.handDraggable.enabled = false;
