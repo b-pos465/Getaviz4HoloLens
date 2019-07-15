@@ -11,7 +11,7 @@ public class SourceCodeDialogOnClick : MonoBehaviour
     private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     [Inject]
-    private RayCaster rayCaster;
+    private EntityNameOnHoverController entityNameOnHoverController;
 
     [Inject]
     private ModelStateController modelStateController;
@@ -49,16 +49,12 @@ public class SourceCodeDialogOnClick : MonoBehaviour
             return;
         }
 
-        if (this.rayCaster.Hits)
+        if (this.entityNameOnHoverController.IsAllocatedToAClass())
         {
-            Entity entity = this.rayCaster.Target.GetComponent<Entity>();
-            if (entity != null && entity.type == "FAMIX.Class")
-            {
-                this.buttonClickSoundService.PlayButtonClickSound();
-                this.modelStateController.SwitchState(ModelState.SOURCECODE);
+            this.buttonClickSoundService.PlayButtonClickSound();
+            this.modelStateController.SwitchState(ModelState.SOURCECODE);
 
-                this.UpdateSourceCode(entity);
-            }
+            this.UpdateSourceCode(this.entityNameOnHoverController.GetCurrentEntity());
         }
     }
 

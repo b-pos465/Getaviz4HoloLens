@@ -27,7 +27,7 @@ public class EntityNameOnHoverController : MonoBehaviour
     private Text text;
     private Canvas canvas;
 
-    private Entity lastEntityAllocatedTo = null;
+    private Entity currentEntityAllocatedTo;
 
     private void Start()
     {
@@ -37,25 +37,32 @@ public class EntityNameOnHoverController : MonoBehaviour
 
     private void Update()
     {
-        this.canvas.enabled = false;
-
-        if (this.rayCaster.Target != null)
+        if (this.GazeHitsEntity())
         {
-            Entity entity = this.rayCaster.Target.GetComponent<Entity>();
-            if (entity != null)
-            {
-                this.SetPosition(entity);
-                this.SetLabel(entity);
-                this.lastEntityAllocatedTo = entity;
-            }
-            else
+            this.Allocate(this.rayCaster.Target.GetComponent<Entity>());
+
+        }
+        else if (this.currentEntityAllocatedTo != null)
+        {
+            float distanceCameraToCurrentTarget = Vector3.Distance(Camera.main.transform.position, this.currentEntityAllocatedTo.transform.position);
+            Vector3 approximatedRayPoint = Camera.main.transform.position + this.rayCaster.Direction * distanceCameraToCurrentTarget;
+            Vector3 closesPointOnCurrentTarget = this.currentEntityAllocatedTo.GetComponent<BoxCollider>().ClosestPoint(approximatedRayPoint);
+            float approximatedDistanceBetweenCurrentTargetAndRay = Vector3.Distance(closesPointOnCurrentTarget, approximatedRayPoint);
+
+            if (approximatedDistanceBetweenCurrentTargetAndRay > 0.03f)
             {
                 this.Deallocate();
+                this.canvas.enabled = false;
             }
         }
 
         this.AdjustRotationToCameraPosition();
         this.AdjustFontSize();
+    }
+
+    private bool GazeHitsEntity()
+    {
+        return this.rayCaster.Target != null && this.rayCaster.Target.GetComponent<Entity>() != null;
     }
 
     private void AdjustRotationToCameraPosition()
@@ -64,9 +71,16 @@ public class EntityNameOnHoverController : MonoBehaviour
         this.transform.Rotate(new Vector3(0, 180, 0));
     }
 
-    private void SetPosition(Entity entity)
+    private void Allocate(Entity entity)
     {
         this.canvas.enabled = true;
+        this.UpdatePosition(entity);
+        this.UpdateLabel(entity);
+        this.currentEntityAllocatedTo = entity;
+    }
+
+    private void UpdatePosition(Entity entity)
+    {
         Vector3 newPosition = this.transform.position;
 
         if (entity.IsPackage())
@@ -85,7 +99,7 @@ public class EntityNameOnHoverController : MonoBehaviour
         }
         else if (this.strategy == Strategy.STAY_ON_ENTER_HITPOINT)
         {
-            if (entity != this.lastEntityAllocatedTo)
+            if (entity != this.currentEntityAllocatedTo)
             {
                 newPosition = this.rayCaster.HitPoint + this.nonPackageOffset;
             }
@@ -94,7 +108,7 @@ public class EntityNameOnHoverController : MonoBehaviour
         this.transform.position = newPosition;
     }
 
-    private void SetLabel(Entity entity)
+    private void UpdateLabel(Entity entity)
     {
         string prefix = entity.IsClass() ? "Class" : "Package";
         string label = prefix + ": " + entity.name;
@@ -111,17 +125,22 @@ public class EntityNameOnHoverController : MonoBehaviour
 
     private void Deallocate()
     {
-        this.lastEntityAllocatedTo = null;
+        this.currentEntityAllocatedTo = null;
     }
 
-    public bool IsShowingEntityName ()
+    public bool IsShowingEntityName()
     {
         return this.canvas.enabled;
     }
 
+    public bool IsAllocatedToAClass()
+    {
+        return this.currentEntityAllocatedTo != null && this.currentEntityAllocatedTo.type == "FAMIX.Class";
+    }
+
     public Entity GetCurrentEntity()
     {
-        return this.lastEntityAllocatedTo;
+        return this.currentEntityAllocatedTo;
     }
 
     public enum Strategy

@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 65019405125131526}
   - component: {fileID: 23490777130524338}
   - component: {fileID: 114747425297240968}
-  - component: {fileID: 114662508059951200}
   - component: {fileID: 114283840938979732}
   - component: {fileID: 120173799799425514}
   m_Layer: 0
@@ -110,21 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dead6e2ff5f5a14a98ff72702794d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114662508059951200
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1427651235729496}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6163fe0921e937940a23430f8e711000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverColor: {r: 0.8602941, g: 0.08223397, b: 0.08223397, a: 0}
-  fadeSelectDurationInSeconds: 0.3
-  fadeDeselectDurationInSeconds: 0.2
-  enableFade: 0
 --- !u!114 &114747425297240968
 MonoBehaviour:
   m_ObjectHideFlags: 1

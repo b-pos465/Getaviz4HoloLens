@@ -1,89 +1,71 @@
 ﻿using Gaze;
-using System.Collections;
+using Model;
 using UnityEngine;
 using Zenject;
 
 public class ColorChangeOnHover : MonoBehaviour
 {
+    private static readonly string COLOR_STRING = "_Color";
+
     [Inject]
     private RayCaster rayCaster;
 
     public Color hoverColor;
 
-    [Header("Durations")]
-    public float fadeSelectDurationInSeconds = 0.3f;
-    public float fadeDeselectDurationInSeconds = 0.2f;
 
-    public bool enableFade = false;
-
+    private GameObject currentTarget;
     private Color defaultColor;
-    private MeshRenderer meshRenderer;
-
-    private void Start()
-    {
-        this.meshRenderer = this.GetComponent<MeshRenderer>();
-        this.defaultColor = this.meshRenderer.material.color;
-    }
 
     private void Update()
     {
-        if (this.rayCaster.Hits && this.rayCaster.Target == this.gameObject)
+        if (this.HitsNewEntity())
         {
-            if (this.enableFade)
-            {
-                this.StartCoroutine(this.Fade(Direction.SELECT));
-            }
-            else
-            {
-                this.meshRenderer.material.SetColor("_Color", this.hoverColor);
-            }
+            this.ResetCurrentTargetColor();
+            this.SetColorForNewEntityAndCacheReferences();
         }
-        else if (this.meshRenderer.material.color == this.hoverColor)
+        else if (this.HitsNoEntity())
         {
-            if (this.enableFade)
+            if (this.currentTarget != null)
             {
-                this.StartCoroutine(this.Fade(Direction.DESELECT));
-            }
-            else
-            {
-                this.meshRenderer.material.SetColor("_Color", this.defaultColor);
+                float distanceCameraToCurrentTarget = Vector3.Distance(Camera.main.transform.position, this.currentTarget.transform.position);
+                Vector3 approximatedRayPoint = Camera.main.transform.position + this.rayCaster.Direction * distanceCameraToCurrentTarget;
+                Vector3 closesPointOnCurrentTarget = this.currentTarget.GetComponent<BoxCollider>().ClosestPoint(approximatedRayPoint);
+                float approximatedDistanceBetweenCurrentTargetAndRay = Vector3.Distance(closesPointOnCurrentTarget, approximatedRayPoint);
+
+                if (approximatedDistanceBetweenCurrentTargetAndRay > 0.03f)
+                {
+                    this.ResetCurrentTargetColor();
+                }
             }
         }
     }
 
-    private void OnDisable()
+    private bool HitsNewEntity()
     {
-        if (this.meshRenderer != null)
+        return this.rayCaster.Hits && this.rayCaster.Target.GetComponent<Entity>() != null && this.rayCaster.Target != this.currentTarget;
+    }
+
+    private bool HitsNoEntity()
+    {
+        return (this.rayCaster.Hits && this.rayCaster.Target.GetComponent<Entity>() == null) || !this.rayCaster.Hits;
+    }
+
+    private void ResetCurrentTargetColor()
+    {
+        if (this.currentTarget != null)
         {
-            this.meshRenderer.material.SetColor("_Color", this.defaultColor);
+            MeshRenderer oldMeshRenderer = this.currentTarget.GetComponent<MeshRenderer>();
+            oldMeshRenderer.material.SetColor(COLOR_STRING, this.defaultColor);
+            this.currentTarget = null;
         }
     }
 
-    private IEnumerator Fade(Direction direction)
+    private void SetColorForNewEntityAndCacheReferences()
     {
-        float fadeDurationInSeconds = direction == Direction.SELECT ? this.fadeSelectDurationInSeconds : this.fadeDeselectDurationInSeconds;
-        Color startColor = direction == Direction.SELECT ? this.defaultColor : this.hoverColor;
-        Color targetColor = direction == Direction.SELECT ? this.hoverColor : this.defaultColor;
+        MeshRenderer meshRenderer = this.rayCaster.Target.GetComponent<MeshRenderer>();
+        this.defaultColor = meshRenderer.material.GetColor(COLOR_STRING);
+        meshRenderer.material.SetColor(COLOR_STRING, this.hoverColor);
 
-        float progressAsPercentage = 0f;
-
-        while (progressAsPercentage < 1f)
-        {
-            float fromZeroToOne = (Mathf.Cos(Mathf.PI * progressAsPercentage + Mathf.PI) + 1f) * 0.5f;
-
-            Color currentColor = Color.Lerp(startColor, targetColor, fromZeroToOne);
-            this.meshRenderer.material.SetColor("_Color", currentColor);
-
-            progressAsPercentage += Time.deltaTime * (1f / fadeDurationInSeconds);
-
-            yield return null;
-        }
-
-        this.meshRenderer.material.SetColor("_Color", targetColor);
-    }
-
-    enum Direction
-    {
-        SELECT, DESELECT
+        this.currentTarget = this.rayCaster.Target;
     }
 }

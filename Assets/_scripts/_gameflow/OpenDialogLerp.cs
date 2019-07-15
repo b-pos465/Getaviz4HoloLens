@@ -1,12 +1,11 @@
-﻿using Gaze;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public class OpenDialogLerp : MonoBehaviour
 {
     [Inject]
-    private RayCaster rayCaster;
+    private EntityNameOnHoverController entityNameOnHoverController;
 
     [Inject]
     private MenuBarController menuBarController;
@@ -26,11 +25,9 @@ public class OpenDialogLerp : MonoBehaviour
             return;
         }
 
-        GameObject hitObject = this.rayCaster.Target;
-
-        if (hitObject != null)
+        if (this.entityNameOnHoverController.IsAllocatedToAClass())
         {
-            this.StartCoroutine(this.Animate(hitObject.transform.position));
+            this.StartCoroutine(this.Animate(this.entityNameOnHoverController.GetCurrentEntity().transform.position));
         }
     }
 

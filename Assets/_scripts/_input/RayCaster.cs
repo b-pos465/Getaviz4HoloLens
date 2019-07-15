@@ -29,6 +29,17 @@ namespace Gaze
         public GameObject Target { get; private set; }
         public Vector3 HitPoint { get; private set; }
         public Vector3 HitPointNormal { get; private set; }
+        public Vector3 Direction
+        {
+            get
+            {
+                return this.gazeStabilizer.StableRay.direction.normalized;
+            }
+            private set
+            {
+
+            }
+        }
 
         void Update()
         {
