@@ -19,14 +19,14 @@ public class LoadingTextController : MonoBehaviour
 
     public float minimumVisibilityTimeInSeconds = 3f;
 
-    private Text text;
+    private CanvasGroup canvasGroup;
 
     // This is used to makesure that the text is at least visible for a few seconds.
     private float startTime;
 
     private void Start()
     {
-        this.text = this.GetComponentInChildren<Text>();
+        this.canvasGroup = this.GetComponent<CanvasGroup>();
 
         log.Debug("Disabling cursor ...");
         this.cursorIndicator.gameObject.SetActive(false);
@@ -51,7 +51,7 @@ public class LoadingTextController : MonoBehaviour
         while (progressAsPercentage < 1f)
         {
             float fromZeroToOne = (Mathf.Cos(Mathf.PI * progressAsPercentage + Mathf.PI) + 1f) * 0.5f;
-            this.text.color = new Color(1f, 1f, 1f, 1f - fromZeroToOne);
+            this.canvasGroup.alpha = 1f - fromZeroToOne;
 
             progressAsPercentage += Time.deltaTime * (1f / fadeDurationInSeconds);
 
