@@ -14,19 +14,29 @@ public class LoadingTextController : MonoBehaviour
     [Inject]
     private CursorIndicator cursorIndicator;
 
+    [Inject]
+    private MetaphorPlacerIndicator metaphorPlacerIndicator;
+
+    public float minimumVisibilityTimeInSeconds = 3f;
+
     private Text text;
+
+    // This is used to makesure that the text is at least visible for a few seconds.
+    private float startTime;
 
     private void Start()
     {
         this.text = this.GetComponentInChildren<Text>();
 
-        log.Debug("Disabling cursor ...");  
+        log.Debug("Disabling cursor ...");
         this.cursorIndicator.gameObject.SetActive(false);
+
+        this.startTime = Time.time;
     }
 
     void Update()
     {
-        if (this.spatialMappingRootIndicator.gameObject.transform.childCount > 0)
+        if (this.spatialMappingRootIndicator.gameObject.transform.childCount > 0 && Time.time - this.startTime > this.minimumVisibilityTimeInSeconds)
         {
             this.StartCoroutine(this.FadeOut());
         }
@@ -52,5 +62,6 @@ public class LoadingTextController : MonoBehaviour
 
         log.Debug("Enabling cursor ...");
         this.cursorIndicator.gameObject.SetActive(true);
+        this.metaphorPlacerIndicator.gameObject.SetActive(true);
     }
 }

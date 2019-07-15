@@ -9,6 +9,9 @@ public class TutorialDialogController : MonoBehaviour
     private RayCaster rayCaster;
 
     [Inject]
+    private LoadingTextController loadingTextController;
+
+    [Inject]
     private YesButtonIndicator yesButtonIndicator;
 
     [Inject]
@@ -25,9 +28,6 @@ public class TutorialDialogController : MonoBehaviour
 
     [Inject]
     private KeywordToCommandService keywordToCommandService;
-
-    [Inject]
-    private MetaphorPlacerIndicator metaphorPlacerIndicator;
 
     [Inject]
     private TutorialStateControllerIndicator tutorialStateControllerIndicator;
@@ -74,7 +74,7 @@ public class TutorialDialogController : MonoBehaviour
 
     private void SelectNo()
     {
-        this.metaphorPlacerIndicator.gameObject.SetActive(true);
+        this.loadingTextController.gameObject.SetActive(true);
         Destroy(this.gameObject);
     }
 }

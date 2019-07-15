@@ -26,6 +26,7 @@ public class MainInstaller : MonoInstaller
         this.Container.Bind<ButtonClickSoundService>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<EntityNameOnHoverController>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<TutorialProgressBarController>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<LoadingTextController>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<SourceCodeSnippetInstantiator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SourceCodeClassNameController>().FromComponentInHierarchy().AsSingle();
