@@ -9,6 +9,9 @@ using Zenject;
 public class TutorialStateController : MonoBehaviour
 {
     [Inject]
+    private LoadingTextController loadingTextController;
+
+    [Inject]
     private ModelStateController modelStateController;
 
     [Inject]
@@ -44,6 +47,16 @@ public class TutorialStateController : MonoBehaviour
 
     private void Start()
     {
+        this.StartCoroutine(this.WaitUntilSpatialMappingScanFinished());
+    }
+
+    private IEnumerator WaitUntilSpatialMappingScanFinished()
+    {
+        while (this.loadingTextController.gameObject.activeSelf)
+        {
+            yield return null;
+        }
+
         this.GazeAtTheTableStep();
     }
 

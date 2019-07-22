@@ -24,7 +24,7 @@ public class ModelStateController : MonoBehaviour
     [Inject]
     private SourceCodeDialogIndicator sourceCodeDialogIndicator;
 
-    private ModelHoverController modelHoverController;
+    private ColorChangeOnHover colorChangeOnHover;
     private BoundingBoxRig boundingBoxRig;
     private HandDraggable handDraggable;
     private SourceCodeDialogOnClick sourceCodeDialogOnClick;
@@ -37,7 +37,7 @@ public class ModelStateController : MonoBehaviour
 
     private void Start()
     {
-        this.modelHoverController = this.GetComponent<ModelHoverController>();
+        this.colorChangeOnHover = this.GetComponent<ColorChangeOnHover>();
         this.boundingBoxRig = this.GetComponent<BoundingBoxRig>();
         this.handDraggable = this.GetComponent<HandDraggable>();
         this.sourceCodeDialogOnClick = this.GetComponent<SourceCodeDialogOnClick>();
@@ -75,7 +75,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.INTERACTABLE)
         {
-            this.modelHoverController.enabled = true;
+            this.colorChangeOnHover.enabled = true;
             this.boundingBoxRig.enabled = true;
             this.boundingBoxRig.Deactivate();
             this.handDraggable.enabled = true;
@@ -93,7 +93,7 @@ public class ModelStateController : MonoBehaviour
         else if (newState == ModelState.TRANSFORM)
         {
             this.boundingBoxRig.Activate();
-            this.modelHoverController.enabled = false;
+            this.colorChangeOnHover.enabled = false;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(false);
             this.modelColliderDeactivator.enabled = false;
@@ -107,7 +107,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.FILTER)
         {
-            this.modelHoverController.enabled = true;
+            this.colorChangeOnHover.enabled = true;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(true);
             this.modelColliderDeactivator.enabled = false;
@@ -120,7 +120,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.SOURCECODE)
         {
-            this.modelHoverController.enabled = true;
+            this.colorChangeOnHover.enabled = true;
             this.sourceCodeDialogOnClick.enabled = true;
             this.entityNameOnHoverIndicator.gameObject.SetActive(true);
             this.modelColliderDeactivator.enabled = false;
@@ -133,7 +133,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.INFO)
         {
-            this.modelHoverController.enabled = true;
+            this.colorChangeOnHover.enabled = true;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(true);
             this.modelColliderDeactivator.enabled = false;
@@ -146,7 +146,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.TUTORIAL_TRANSFORM_ONLY)
         {
-            this.modelHoverController.enabled = false;
+            this.colorChangeOnHover.enabled = false;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(false);
             this.modelColliderDeactivator.enabled = false;
@@ -160,7 +160,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.TUTORIAL_GAZE_ONLY)
         {
-            this.modelHoverController.enabled = true;
+            this.colorChangeOnHover.enabled = true;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(true);
             this.modelColliderDeactivator.enabled = false;
@@ -173,7 +173,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.TUTORIAL_SOURCECODE_ONLY)
         {
-            this.modelHoverController.enabled = true;
+            this.colorChangeOnHover.enabled = true;
             this.sourceCodeDialogOnClick.enabled = true;
             this.entityNameOnHoverIndicator.gameObject.SetActive(true);
             this.modelColliderDeactivator.enabled = false;
@@ -186,7 +186,7 @@ public class ModelStateController : MonoBehaviour
         }
         else if (newState == ModelState.TUTORIAL_FILTER_ONLY)
         {
-            this.modelHoverController.enabled = false;
+            this.colorChangeOnHover.enabled = false;
             this.sourceCodeDialogOnClick.enabled = false;
             this.entityNameOnHoverIndicator.gameObject.SetActive(false);
             this.modelColliderDeactivator.enabled = false;
@@ -215,7 +215,7 @@ public class ModelStateController : MonoBehaviour
         this.sourceCodeDialogIndicator.gameObject.SetActive(false);
         this.infoDialogIndicator.gameObject.SetActive(false);
 
-        this.modelHoverController.enabled = false;
+        this.colorChangeOnHover.enabled = false;
         this.boundingBoxRig.enabled = false;
         this.handDraggable.enabled = false;
         this.sourceCodeDialogOnClick.enabled = false;

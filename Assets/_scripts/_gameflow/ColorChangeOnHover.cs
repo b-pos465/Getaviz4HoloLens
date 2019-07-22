@@ -50,6 +50,11 @@ public class ColorChangeOnHover : MonoBehaviour
         return (this.rayCaster.Hits && this.rayCaster.Target.GetComponent<Entity>() == null) || !this.rayCaster.Hits;
     }
 
+    private void OnDisable()
+    {
+        this.ResetCurrentTargetColor();
+    }
+
     private void ResetCurrentTargetColor()
     {
         if (this.currentTarget != null)

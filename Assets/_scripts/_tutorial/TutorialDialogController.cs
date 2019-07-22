@@ -68,6 +68,7 @@ public class TutorialDialogController : MonoBehaviour
 
     private void SelectYes()
     {
+        this.loadingTextController.gameObject.SetActive(true);
         this.tutorialStateControllerIndicator.gameObject.SetActive(true);
         Destroy(this.gameObject);
     }
