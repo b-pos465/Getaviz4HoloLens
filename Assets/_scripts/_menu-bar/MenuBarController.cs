@@ -10,7 +10,10 @@ public class MenuBarController : MonoBehaviour
     private MenuBarFilterButtonIndicator menuBarFilterButtonIndicator;
 
     [Inject]
-    private MenuBarInfoButtonIndicator menuBarInfoButtonIndicator;
+    private MenuBarAboutButtonIndicator menuBarAboutButtonIndicator;
+
+    [Inject]
+    private MenuBarLegendButtonIndicator menuBarLegendButtonIndicator;
 
     [Inject]
     private MenuBarTransformButtonIndicator menuBarTransformButtonIndicator;
@@ -22,6 +25,8 @@ public class MenuBarController : MonoBehaviour
     private MenuBarButtonContainerIndicator menuBarButtonContainerIndicator;
 
     private MenuBarState menuBarState;
+
+    private readonly int DEFAULT_BUTTON_COUNT = 4;
 
     void Start()
     {
@@ -37,28 +42,33 @@ public class MenuBarController : MonoBehaviour
                 this.menuBarDoneButtonIndicator.gameObject.SetActive(false);
                 this.menuBarFilterButtonIndicator.gameObject.SetActive(true);
                 this.menuBarTransformButtonIndicator.gameObject.SetActive(true);
-                this.menuBarInfoButtonIndicator.gameObject.SetActive(true);
+                this.menuBarLegendButtonIndicator.gameObject.SetActive(true);
+                this.menuBarAboutButtonIndicator.gameObject.SetActive(true);
+               
                 break;
 
             case MenuBarState.TUTORIAL_FILTER_ONLY:
                 this.menuBarDoneButtonIndicator.gameObject.SetActive(false);
                 this.menuBarFilterButtonIndicator.gameObject.SetActive(true);
                 this.menuBarTransformButtonIndicator.gameObject.SetActive(false);
-                this.menuBarInfoButtonIndicator.gameObject.SetActive(false);
+                this.menuBarLegendButtonIndicator.gameObject.SetActive(false);
+                this.menuBarAboutButtonIndicator.gameObject.SetActive(false);
                 break;
 
             case MenuBarState.TUTORIAL_TRANSFORM_ONLY:
                 this.menuBarDoneButtonIndicator.gameObject.SetActive(false);
                 this.menuBarFilterButtonIndicator.gameObject.SetActive(false);
                 this.menuBarTransformButtonIndicator.gameObject.SetActive(true);
-                this.menuBarInfoButtonIndicator.gameObject.SetActive(false);
+                this.menuBarLegendButtonIndicator.gameObject.SetActive(false);
+                this.menuBarAboutButtonIndicator.gameObject.SetActive(false);
                 break;
 
             case MenuBarState.DONE_ONLY:
                 this.menuBarDoneButtonIndicator.gameObject.SetActive(true);
                 this.menuBarFilterButtonIndicator.gameObject.SetActive(false);
                 this.menuBarTransformButtonIndicator.gameObject.SetActive(false);
-                this.menuBarInfoButtonIndicator.gameObject.SetActive(false);
+                this.menuBarLegendButtonIndicator.gameObject.SetActive(false);
+                this.menuBarAboutButtonIndicator.gameObject.SetActive(false);
                 break;
         }
 
@@ -85,7 +95,7 @@ public class MenuBarController : MonoBehaviour
     private void AdjustBackplate(MenuBarState menuBarState)
     {
         float xScalePerButton = 0.1f;
-        int buttonCount = menuBarState == MenuBarState.DEFAULT ? 3 : 1;
+        int buttonCount = menuBarState == MenuBarState.DEFAULT ? this.DEFAULT_BUTTON_COUNT : 1;
 
         Vector3 scale = this.menuBarBackPlateIndicator.transform.localScale;
         scale.x = xScalePerButton * buttonCount;
@@ -94,7 +104,7 @@ public class MenuBarController : MonoBehaviour
 
     private void AdjustButtonContainerPositions(MenuBarState menuBarState)
     {
-        int buttonCount = menuBarState == MenuBarState.DEFAULT ? 3 : 1;
+        int buttonCount = menuBarState == MenuBarState.DEFAULT ? this.DEFAULT_BUTTON_COUNT : 1;
 
         this.menuBarButtonContainerIndicator.transform.localPosition = new Vector3(-(buttonCount - 1) * 0.05f, 0, 0);
     }

@@ -13,8 +13,9 @@ public class MenuBarInstaller : MonoInstaller
 
         this.Container.Bind<MenuBarDoneButtonIndicator>().FromComponentInChildren();
         this.Container.Bind<MenuBarFilterButtonIndicator>().FromComponentInChildren();
-        this.Container.Bind<MenuBarInfoButtonIndicator>().FromComponentInChildren();
+        this.Container.Bind<MenuBarAboutButtonIndicator>().FromComponentInChildren();
         this.Container.Bind<MenuBarTransformButtonIndicator>().FromComponentInChildren();
+        this.Container.Bind<MenuBarLegendButtonIndicator>().FromComponentInChildren();
 
         this.Container.Bind<MenuBarBackPlateIndicator>().FromComponentInChildren();
         this.Container.Bind<MenuBarButtonContainerIndicator>().FromComponentInChildren();

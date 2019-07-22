@@ -1,4 +1,4 @@
 ﻿public enum GetavizKeyword
 {
-    FILTER, TRANSFORM, UP, DOWN, CLOSE, DONE, YES, NO, INFO
+    FILTER, TRANSFORM, UP, DOWN, CLOSE, DONE, YES, NO, ABOUT, LEGEND
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 using Zenject;
 
-public class MenuBarInfoButtonController : MonoBehaviour
+public class MenuBarAboutButtonController : MonoBehaviour
 {
     [Inject]
     private TapService tapService;
@@ -23,7 +23,7 @@ public class MenuBarInfoButtonController : MonoBehaviour
     private void Start()
     {
         this.tapService.Register(this.OnTap);
-        this.keywordToCommandService.Register(GetavizKeyword.INFO, this.OnInfoVoiceCommand);
+        this.keywordToCommandService.Register(GetavizKeyword.ABOUT, this.OnInfoVoiceCommand);
     }
 
     private void OnInfoVoiceCommand()
@@ -45,6 +45,6 @@ public class MenuBarInfoButtonController : MonoBehaviour
     private void TriggerInfo()
     {
         this.buttonClickSoundService.PlayButtonClickSound();
-        this.modelStateController.SwitchState(ModelState.INFO);
+        this.modelStateController.SwitchState(ModelState.ABOUT);
     }
 }
