@@ -3,16 +3,9 @@
 [![Unity Version](https://img.shields.io/badge/unity%20version-2017.4.26f1-green.svg)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-This project is an UI port of [Getaviz](https://github.com/softvis-research/Getaviz) for *Mixed Reality* on a 
-**Microsoft HoloLens**. It only supports the "city metaphor".
+**Getaviz** is a software visualisation tool developed by the research group "Visual Software Analytics". This project is an UI port of [Getaviz](https://github.com/softvis-research/Getaviz) for *Mixed Reality* on a **Microsoft HoloLens**. It was written as part of a master thesis in 2019. The model included in the repository is **JUnit 4.12**.
 
-## Import A-Frame Model
-
-If you want to import a different model, created by the [Getaviz](https://github.com/softvis-research/Getaviz) generator, 
-put the `model.html` and the `metaData.json` into the `Assets/_generator-data` folder.
 
 ## Contribute
 
-If you want to contribute please note that **Unity** has to be adjusted to work with **Git**. 
-Here is an article with all the necessary details to get you started:
-https://thoughtbot.com/blog/how-to-git-with-unity
+If you want to contribute, plase have a look at the [guidelines](CONTRIBUTING.md) first.
