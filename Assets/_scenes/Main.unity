@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durationInSeconds: 0.5
-  distanceToCamera: 2.5
+  distanceBehindModel: 1
   animationStartsAtMenuBar: 1
 --- !u!114 &148419437
 MonoBehaviour:
@@ -1556,6 +1556,89 @@ Transform:
   m_Father: {fileID: 1848397951}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &204633249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 204633250}
+  - component: {fileID: 204633253}
+  - component: {fileID: 204633252}
+  - component: {fileID: 204633251}
+  m_Layer: 0
+  m_Name: Image - Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &204633250
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 204633249}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1919636053}
+  m_Father: {fileID: 1390164984}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -0.00012207031, y: 0.0000007636845}
+  m_SizeDelta: {x: 0, y: 70}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &204633251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 204633249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1254083943, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 2
+  m_AspectRatio: 1
+--- !u!114 &204633252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 204633249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607845, g: 0.19607845, b: 0.33333334, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &204633253
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 204633249}
 --- !u!1001 &221432763
 Prefab:
   m_ObjectHideFlags: 0
@@ -9353,7 +9436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durationInSeconds: 0.5
-  distanceToCamera: 2.5
+  distanceBehindModel: 1
   animationStartsAtMenuBar: 0
 --- !u!1 &930731572
 GameObject:
@@ -9937,7 +10020,6 @@ GameObject:
   - component: {fileID: 1007911071}
   - component: {fileID: 1007911074}
   - component: {fileID: 1007911073}
-  - component: {fileID: 1007911072}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -9955,27 +10037,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1581646319}
+  m_Father: {fileID: 1427429752}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0.1, y: 0.1}
+  m_AnchorMax: {x: 0.9, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 70}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1007911072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1007911070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1254083943, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 2
-  m_AspectRatio: 1
 --- !u!114 &1007911073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12847,7 +12916,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
   m_Children:
-  - {fileID: 1919636053}
+  - {fileID: 204633250}
   - {fileID: 1938146933}
   m_Father: {fileID: 1410307919}
   m_RootOrder: 2
@@ -13196,6 +13265,89 @@ Transform:
   m_Father: {fileID: 853843596}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1427429751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1427429752}
+  - component: {fileID: 1427429755}
+  - component: {fileID: 1427429754}
+  - component: {fileID: 1427429753}
+  m_Layer: 0
+  m_Name: Image - Background (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1427429752
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427429751}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1007911071}
+  m_Father: {fileID: 1581646319}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 70}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1427429753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427429751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1254083943, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 2
+  m_AspectRatio: 1
+--- !u!114 &1427429754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427429751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607845, g: 0.19607845, b: 0.33333334, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1427429755
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1427429751}
 --- !u!1 &1441520105
 GameObject:
   m_ObjectHideFlags: 0
@@ -14225,7 +14377,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
   m_Children:
-  - {fileID: 1007911071}
+  - {fileID: 1427429752}
   - {fileID: 856055078}
   m_Father: {fileID: 1410307919}
   m_RootOrder: 3
@@ -14940,7 +15092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durationInSeconds: 0.5
-  distanceToCamera: 2.5
+  distanceBehindModel: 1
   animationStartsAtMenuBar: 1
 --- !u!114 &1659259178
 MonoBehaviour:
@@ -17390,7 +17542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durationInSeconds: 0.5
-  distanceToCamera: 2.5
+  distanceBehindModel: 1
   animationStartsAtMenuBar: 1
 --- !u!1001 &1849180275
 Prefab:
@@ -17716,22 +17868,62 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<size=40>Getaviz4HoloLens</size> \n\n<b>Getaviz4HoloLens</b> is a software
-    visualisation tool which was created as part of a master thesis in 2019. We worked
-    on a way to bring the software visualisation tool <b>Getaviz</b> to the HoloLens.
-    If you want to learn more about <b>Getaviz</b> have a look at the official GitHub
-    repository: <i>https://github.com/softvis-research/Getaviz</i>\n\n<size=40>City
-    Metaphor</size>\n\n<b>Getaviz</b> supports different software visualisation metaphors.
-    We decided to use the <b>city metaphor</b> for the mixed reality implementation.
-    We think that the real world association fits really well for a holographic representation.
-    It makes it easy for the user to understand the encoded metrics. Furthermore,
-    its intuitive to navigate and users can use common terms to describe what they
-    see.\n\nWe used <b>JUnit 4.12</b> as it comes with really nice charateristics
-    like the <i>Assert</i> class which contains a lot of slim methods.\n\n<size=40>Credits</size>\n\n<b>Icons
-    by Icons8:</b>\n\n<i>https://icons8.com</i>\n<i>https://icons8.com/license/</i>\n\n<b>Icons
-    by Game-icons.net:</b>\n\n<i>https://game-icons.net/</i>\n\n\"Vertical Flip icon\",
-    \"Horizontal Flip icon\" and \"Move icon\" by Delapouite under CC BY 3.0: <i>https://creativecommons.org/licenses/by/3.0/</i>\n\nLinks:\n<i>https://game-icons.net/1x1/delapouite/vertical-flip.html</i>\n<i>https://game-icons.net/1x1/delapouite/horizontal-flip.html</i>\n<i>https://game-icons.net/1x1/delapouite/move.html</i>\n\n\n<b>Font
-    \"Anonymous Pro\" by Mark Simonson:</b>\n\n<i>https://fonts.google.com/specimen/Anonymous+Pro</i>"
+  m_Text: 'Getaviz is a software visualisation tool developed by the research group
+    "Visual Software Analytics". The AR prototype was written as part of a master
+    thesis in 2019 by Stefan Bechert. With Getaviz AR you can explore the Java testing
+    library JUnit 4.12 visualized as a city. If you want more information please have
+    a look at the official GitHub repository: <i>https://github.com/softvis-research/Getaviz</i>.
+
+
+    <b><size=35>City Metaphor</size></b>
+
+
+    Getaviz supports different software visualisation metaphors. We decided to use
+    the <i>city metaphor</i> for the mixed reality implementation. We think that the
+    real world association fits really well for a holographic representation. It makes
+    it easy for the user to understand the encoded metrics. Furthermore, its intuitive
+    to navigate and users can use common terms to describe what they see.
+
+
+    We use JUnit 4.12 as it comes with really nice charateristics like the <i>Assert</i>
+    class which contains a lot of slim methods.
+
+
+    <b><size=35>Credits</size></b>
+
+
+    <b>Icons by Icons8:</b>
+
+
+    <i>https://icons8.com</i>
+
+    <i>https://icons8.com/license/</i>
+
+
+    <b>Icons by Game-icons.net:</b>
+
+
+    <i>https://game-icons.net/</i>
+
+
+    "Vertical Flip icon", "Horizontal Flip icon" and "Move icon" by Delapouite under
+    CC BY 3.0: <i>https://creativecommons.org/licenses/by/3.0/</i>
+
+
+    Links:
+
+    <i>https://game-icons.net/1x1/delapouite/vertical-flip.html</i>
+
+    <i>https://game-icons.net/1x1/delapouite/horizontal-flip.html</i>
+
+    <i>https://game-icons.net/1x1/delapouite/move.html</i>
+
+
+
+    <b>Font "Anonymous Pro" by Mark Simonson:</b>
+
+
+    <i>https://fonts.google.com/specimen/Anonymous+Pro</i>'
 --- !u!222 &1866198866
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18426,7 +18618,6 @@ GameObject:
   - component: {fileID: 1919636053}
   - component: {fileID: 1919636056}
   - component: {fileID: 1919636055}
-  - component: {fileID: 1919636054}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -18441,30 +18632,17 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1919636052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1390164984}
+  m_Father: {fileID: 204633250}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0.1, y: 0.1}
+  m_AnchorMax: {x: 0.9, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 70}
-  m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1919636054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1919636052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1254083943, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 2
-  m_AspectRatio: 1
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1919636055
 MonoBehaviour:
   m_ObjectHideFlags: 0

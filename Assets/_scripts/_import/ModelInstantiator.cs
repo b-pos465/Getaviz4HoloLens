@@ -49,7 +49,7 @@ namespace Import
             }
 
             BoxCollider boxCollider = this.modelIndicator.gameObject.AddComponent<BoxCollider>();
-            boxCollider.size = bounds.size * 2000f;
+            boxCollider.size = bounds.size * (1f / this.initialModelScale);
             boxCollider.enabled = false;
         }
 
@@ -60,7 +60,11 @@ namespace Import
 
             foreach (LineRenderer lineRenderer in model.GetComponentsInChildren<LineRenderer>())
             {
-                lineRenderer.widthMultiplier = this.initialModelScale;
+#if UNITY_EDITOR
+                lineRenderer.widthMultiplier = 0.0005f;
+#elif UNITY_WSA_10_0
+                lineRenderer.widthMultiplier = 0.01f;
+#endif
             }
         }
 

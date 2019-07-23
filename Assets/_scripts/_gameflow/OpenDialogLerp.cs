@@ -10,9 +10,12 @@ public class OpenDialogLerp : MonoBehaviour
     [Inject]
     private MenuBarController menuBarController;
 
+    [Inject]
+    private ModelIndicator modelIndicator;
+
     [Header("Animation parameters")]
     public float durationInSeconds = 0.5f;
-    public float distanceToCamera = 2.5f;
+    public float distanceBehindModel = 1.0f;
 
     [Tooltip("Set this to true if the dialog shall be opened from the 'Menu Bar'.")]
     public bool animationStartsAtMenuBar = false;
@@ -33,8 +36,11 @@ public class OpenDialogLerp : MonoBehaviour
 
     private IEnumerator Animate(Vector3 startPosition)
     {
-        Vector3 targetPosition = Camera.main.transform.position + this.distanceToCamera * Camera.main.transform.forward;
-        targetPosition.y = Camera.main.transform.position.y;
+        Vector3 fromCameraToModelWithoutY = this.modelIndicator.transform.position - Camera.main.transform.position;
+        fromCameraToModelWithoutY.y = 0;
+        fromCameraToModelWithoutY = fromCameraToModelWithoutY.normalized;
+
+        Vector3 targetPosition = this.modelIndicator.transform.position + this.distanceBehindModel * fromCameraToModelWithoutY;
 
         float progressAsPercentage = 0f;
 
