@@ -20,6 +20,7 @@ public class IndicatorInstaller : MonoInstaller
         this.Container.Bind<MetaphorPlacerIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<TutorialStateControllerIndicator>().FromComponentInHierarchy().AsSingle();
         this.Container.Bind<SourceCodeScrollViewIndicator>().FromComponentInHierarchy().AsSingle();
+        this.Container.Bind<FilterContentIndicator>().FromComponentInHierarchy().AsSingle();
 
         this.Container.Bind<CloseButtonIndicator>().FromComponentInChildren();
         this.Container.Bind<YesButtonIndicator>().FromComponentInChildren();

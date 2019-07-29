@@ -24,6 +24,9 @@ public class AutoCompleteController : MonoBehaviour
     [Inject]
     private ButtonClickSoundService buttonClickSoundService;
 
+    [Inject]
+    private FilterContentIndicator filterContentIndicator;
+
 
     public GameObject autoCompleteEntryPrefab;
     public GameObject backButtonEntryPrefab;
@@ -52,6 +55,11 @@ public class AutoCompleteController : MonoBehaviour
             return;
         }
 
+        if (!this.TargetIsUIAndInsideViewport(this.rayCaster.Target))
+        {
+            return;
+        }
+
         AutoCompleteEntryController entry = this.rayCaster.Target.GetComponent<AutoCompleteEntryController>();
         AutoCompleteBackButtonIndicator backButton = this.rayCaster.Target.GetComponent<AutoCompleteBackButtonIndicator>();
 
@@ -65,6 +73,21 @@ public class AutoCompleteController : MonoBehaviour
             this.buttonClickSoundService.PlayButtonClickSound();
             this.GoBack();
         }
+    }
+
+    private bool TargetIsUIAndInsideViewport(GameObject target)
+    {
+        RectTransform targetRectTransform = target.GetComponent<RectTransform>();
+
+        if (targetRectTransform == null)
+        {
+            return false;
+        }
+
+        float contentOffset = this.filterContentIndicator.GetComponent<RectTransform>().localPosition.y;
+        float midOfTargetElement = Mathf.Abs(targetRectTransform.localPosition.y) + Mathf.Abs(targetRectTransform.rect.height / 2f);
+
+        return midOfTargetElement > contentOffset;
     }
 
     private void SelectEntry(EntityNode entityNode)
