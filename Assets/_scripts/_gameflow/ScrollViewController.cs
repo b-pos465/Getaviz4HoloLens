@@ -112,5 +112,8 @@ public class ScrollViewController : MonoBehaviour
 
             yield return null;
         }
+
+        Canvas.ForceUpdateCanvases();
+        this.scrollRect.verticalNormalizedPosition = targetPositiion;
     }
 }
