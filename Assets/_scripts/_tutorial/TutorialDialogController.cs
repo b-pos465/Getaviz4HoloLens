@@ -47,8 +47,6 @@ public class TutorialDialogController : MonoBehaviour
             return;
         }
 
-        this.buttonClickSoundService.PlayButtonClickSound();
-
         if (this.rayCaster.Target == this.yesButtonIndicator.gameObject)
         {
             this.SelectYes();
@@ -68,6 +66,7 @@ public class TutorialDialogController : MonoBehaviour
 
     private void SelectYes()
     {
+        this.buttonClickSoundService.PlayButtonClickSound();
         this.loadingTextController.gameObject.SetActive(true);
         this.tutorialStateControllerIndicator.gameObject.SetActive(true);
         Destroy(this.gameObject);
@@ -75,6 +74,7 @@ public class TutorialDialogController : MonoBehaviour
 
     private void SelectNo()
     {
+        this.buttonClickSoundService.PlayButtonClickSound();
         this.loadingTextController.gameObject.SetActive(true);
         Destroy(this.gameObject);
     }
